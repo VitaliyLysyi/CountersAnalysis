@@ -18,5 +18,8 @@ namespace CountersAnalysis
 
         [XmlAttribute("IsBackward")]
         public bool isBackward;
+
+        [XmlAttribute("CalculationError")]
+        public bool isErrored;
     }
 }

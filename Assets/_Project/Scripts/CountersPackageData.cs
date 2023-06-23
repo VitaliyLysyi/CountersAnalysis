@@ -17,6 +17,9 @@ namespace CountersAnalysis
         [XmlElement("note")]
         public string note;
 
+        [XmlElement("HeadCounter")]
+        public CounterData headCounter;
+
         [XmlElement("Counter")]
         public List<CounterData> counters;
     }

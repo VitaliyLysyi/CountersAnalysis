@@ -6,10 +6,13 @@ namespace CountersAnalysis
 {
     [Serializable]
     [XmlRoot("Counter")]
-    public struct CounterData 
+    public struct CounterData
     {
-        [XmlAttribute ("Number")]
+        [XmlAttribute("Number")]
         public string number;
+
+        [XmlAttribute("Coeficient")]
+        public int coeficient;
 
         [XmlElement("note")]
         public string note;

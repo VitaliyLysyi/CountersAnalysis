@@ -1,108 +1,116 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace CountersAnalysis
 {
+    public enum CountersPackageType
+    {
+        PowerConsumption,
+        CountersData
+    }
+
     public class Analysis : MonoBehaviour
     {
-        private const string TEST_FILE_NAME = "TestFile";
         private const string REM_TEST_FILE_NAME = "RemTestFile";
         private const string TEST_PACKAGE_FILE_NAME = "TestSavedPackage";
+        private const string START_FILE_NAME = "A_Traven23";
+        private const string END_FILE_NAME = "A_Cherven23";
 
         private void Start()
         {
-            //fileSaveTest();
-            //fileReadTest();
-            readTestRemFile();
-            //savePackageTest();
+            analysis();
         }
 
-        private void savePackageTest()
+        private void analysis()
         {
-            CountersPackageData countersPackage = new CountersPackageData();
-            countersPackage.counters = new List<CounterData>();
-            countersPackage.note = "Suka blyad!";
+            CountersPackageData startPackage = DataHandler.loadXML<CountersPackageData>(START_FILE_NAME);
+            //MyLogger.LogPackage(startPackage);
+            CountersPackageData endPackage = DataHandler.loadXML<CountersPackageData>(END_FILE_NAME);
+            //MyLogger.LogPackage(endPackage);
+            CountersPackageData consumptionPackage = makeConsumptionPackage(startPackage, endPackage);
+            MyLogger.LogPackage(consumptionPackage);
+        }
 
-            for (int i = 0; i < 10;  i++)
+        private CountersPackageData makeConsumptionPackage(
+                    //CounterData headCounter,
+                    CountersPackageData startData,
+                    CountersPackageData endData)
+        {
+            CountersPackageData consumptionPackage = new CountersPackageData();
+            consumptionPackage.date = endData.date;
+            consumptionPackage.note = CountersPackageType.PowerConsumption.ToString();
+            //consumptionPackage.headCounter = headCounter;
+            consumptionPackage.counters = new List<CounterData>();
+
+            CounterData matchCounter = new CounterData();
+            foreach (CounterData counter in endData.counters)
             {
-                CounterData counterData = new CounterData();
-                counterData.number = i.ToString();
-
-                counterData.scales = new List<CounterScale>();
-                for (int j = 0; j < 4; j++)
+                if (findMatchCounter(counter, out matchCounter, startData.counters))
                 {
-                    CounterScale counterScale = new CounterScale();
-                    counterScale.zoneNumber = j;
-                    counterData.scales.Add(counterScale);
+                    CounterData counterConsumptionData = createConsumptionData(matchCounter, counter);
+                    consumptionPackage.counters.Add(counterConsumptionData);
                 }
-
-                countersPackage.counters.Add(counterData);
             }
 
-            DataHandler.saveXML(countersPackage, TEST_PACKAGE_FILE_NAME);
+            return consumptionPackage;
         }
 
-        private void readTestRemFile()
+        private bool findMatchCounter(CounterData counterReference, out CounterData matchCounter, List<CounterData> counters)
         {
-            CountersPackageData countersPackage = new CountersPackageData();
-            //countersPackage.counters = new List<CounterData>();
-            countersPackage = DataHandler.loadXML<CountersPackageData>(REM_TEST_FILE_NAME);
+            matchCounter = counters.FirstOrDefault(counter => counter.number == counterReference.number);
+            bool found = !matchCounter.Equals(default(CounterData));
+            return found;
+        }
 
-            Debug.Log("Package: " + countersPackage);
-            Debug.Log("Date: " + countersPackage.date);
-            Debug.Log("Note: " + countersPackage.note);
-            Debug.Log("Counters found: " + countersPackage.counters.Count);
+        private CounterData createConsumptionData(CounterData startData, CounterData endData)
+        {
+            CounterData counter = new CounterData();
+            counter.number = endData.number;
+            counter.note = endData.note;
+            counter.coeficient = endData.coeficient;
+            counter.scales = new List<CounterScale>();
 
-            foreach (CounterData counter in countersPackage.counters)
+            int minLenght = Mathf.Min(startData.scales.Count, endData.scales.Count);
+            for (int i = 0; i < minLenght; i++)
             {
-                Debug.Log("Number: " + counter.number);
+                bool boothScalesIsActive = startData.scales[i].isActive && endData.scales[i].isActive;
+                if (boothScalesIsActive)
+                {
+                    int coeficient = endData.coeficient == 0 ? 1 : endData.coeficient;
+                    CounterScale scale = calculateConsumtion(coeficient, startData.scales[i], endData.scales[i]);
+                    counter.scales.Add(scale);
+                }
+                else
+                {
+                    CounterScale scale = endData.scales[i];
+                    scale.value = 0;
+                }
             }
+
+            return counter;
         }
 
-        private void fileReadTest()
+        private CounterScale calculateConsumtion(int coeficient, CounterScale startScale, CounterScale endScale)
         {
-            CounterData counterData = new CounterData();
-            counterData = DataHandler.loadXML<CounterData>(TEST_FILE_NAME);
-            Debug.Log("Object: " + counterData);
-            Debug.Log("Number: " + counterData.number);
-            Debug.Log("Note: " + counterData.note);
-            foreach (CounterScale scale in counterData.scales)
+            CounterScale scale = new CounterScale();
+            scale.zoneNumber = endScale.zoneNumber;
+            scale.isActive = endScale.isActive;
+            scale.isBackward = endScale.isBackward;
+
+            bool valuesAvailable = startScale.value != 0 && endScale.value != 0;
+            if (valuesAvailable)
             {
-                Debug.Log("Zone: " + scale.zoneNumber);
+                scale.value = (endScale.value - startScale.value) * coeficient;
+                scale.isErrored = false;
             }
-        }
+            else
+            {
+                scale.value = 0;
+                scale.isErrored = true;
+            }
 
-        private void fileSaveTest()
-        {
-            CounterData counterData = new CounterData();
-            counterData.number = "8855312";
-            counterData.note = "Лицевой счет 317094, Гайда Олександра Стефанівна";
-            counterData.scales = new List<CounterScale>();
-
-            CounterScale counterScale = new CounterScale();
-            counterScale.value = 8768.0480f;
-            counterScale.isActive = true;
-            counterData.scales.Add(counterScale);
-
-            counterScale = new CounterScale();
-            counterScale.value = 8768.0480f;
-            counterScale.zoneNumber = 1;
-            counterScale.isActive = true;
-            counterData.scales.Add(counterScale);
-
-            counterScale = new CounterScale();
-            counterScale.value = 0f;
-            counterScale.zoneNumber = 2;
-            counterScale.isActive = true;
-            counterData.scales.Add(counterScale);
-
-            counterScale = new CounterScale();
-            counterScale.value = 0f;
-            counterScale.zoneNumber = 3;
-            counterScale.isActive = true;
-            counterData.scales.Add(counterScale);
-
-            DataHandler.saveXML(counterData, TEST_FILE_NAME);
+            return scale;
         }
     }
 }
