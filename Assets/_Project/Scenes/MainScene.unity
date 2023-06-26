@@ -510,6 +510,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5691168162337302495, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
         type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691168162337302495, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5691168162337302495, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -518,10 +528,45 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5694688948676046070, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694688948676046070, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694688948676046070, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694688948676046070, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694688948676046070, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5694688948676046070, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6134011969145362794, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
         type: 3}
       propertyPath: m_Name
       value: MainWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134011969145362794, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6134011969145362795, guid: 0c4e0159f86f9c6439a5699d5abd6c34,
         type: 3}

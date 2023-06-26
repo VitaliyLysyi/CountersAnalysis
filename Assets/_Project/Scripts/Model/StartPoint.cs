@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace CountersAnalysis
 {
@@ -31,9 +32,6 @@ namespace CountersAnalysis
 
             _dataController = new DataController();
             _dataController.init(_packageRegister, _mainWindowContentPanel);
-
-            //analysis();
-            //EditorUtility.OpenFilePanel("test", "", "xml");
         }
 
         private void analysis()

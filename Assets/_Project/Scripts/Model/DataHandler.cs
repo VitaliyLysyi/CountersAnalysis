@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -70,6 +72,7 @@ namespace CountersAnalysis
                 filePath = _dataPath + dataName + XML_FORMAT;
             }
             //Debug.Log("Data Handler: " + filePath);
+            //C:/Users/VITALIY/AppData/LocalLow/DefaultCompany/CountersAnalysis/RegisterData.xml
 
             if (File.Exists(filePath))
             {
@@ -83,6 +86,15 @@ namespace CountersAnalysis
 
             Debug.Log("Data Handler: " + "Loading error - file not found!");
             return default;
+        }
+
+        public static List<string> readTExtFromFile(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllLines(filePath).ToList();
+            }
+            return null;
         }
     }
 }
