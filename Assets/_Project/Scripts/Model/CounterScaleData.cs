@@ -5,7 +5,7 @@ namespace CountersAnalysis
 {
     [Serializable]
     [XmlRoot("Scale")]
-    public struct CounterScale
+    public struct CounterScaleData
     {
         [XmlAttribute("Value")]
         public float value;

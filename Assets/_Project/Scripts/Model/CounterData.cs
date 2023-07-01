@@ -18,6 +18,6 @@ namespace CountersAnalysis
         public string note;
 
         [XmlElement("Scale")]
-        public List<CounterScale> scales;
+        public List<CounterScaleData> scales;
     }
 }

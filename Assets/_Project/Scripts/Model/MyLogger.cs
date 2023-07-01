@@ -31,14 +31,14 @@ namespace CountersAnalysis
             Debug.Log("Note = " + counter.note);
             if (counter.scales != null)
             {
-                foreach (CounterScale scale in counter.scales)
+                foreach (CounterScaleData scale in counter.scales)
                 {
                     LogScale(scale);
                 }
             }
         }
 
-        public static void LogScale(CounterScale scale, int spacing = 5)
+        public static void LogScale(CounterScaleData scale, int spacing = 5)
         {
             string spacingString = new string('.', spacing); 
             Debug.Log(spacingString 

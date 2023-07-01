@@ -40,10 +40,9 @@ namespace CountersAnalysis
             return null;
         }
 
-        public static void saveXML<T>(T data, string dataName) where T : struct
+        public static void saveXML<T>(T data, string filePath) where T : struct
         {
-            string filePath = _dataPath + dataName + XML_FORMAT;
-            //Debug.Log("Data Handler: " + filePath);
+            Debug.Log("Data Handler: " + filePath);
 
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             StreamWriter streamWriter = new StreamWriter(filePath);
@@ -60,19 +59,10 @@ namespace CountersAnalysis
             streamWriter.Close();
         }
 
-        public static T loadXML<T>(string dataName, bool paramIsPath = false) where T : struct
+        public static T loadXML<T>(string filePath) where T : struct
         {
-            string filePath;
-            if (paramIsPath)
-            {
-                filePath = dataName;
-            }
-            else
-            {
-                filePath = _dataPath + dataName + XML_FORMAT;
-            }
-            //Debug.Log("Data Handler: " + filePath);
-            //C:/Users/VITALIY/AppData/LocalLow/DefaultCompany/CountersAnalysis/RegisterData.xml
+            Debug.Log("Data Handler: " + filePath);
+            //C:/Users/VITALIY/AppData/LocalLow/DefaultCompany/CountersAnalysis/
 
             if (File.Exists(filePath))
             {

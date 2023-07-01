@@ -7,50 +7,67 @@ namespace CountersAnalysis
     public class DataController
     {
         private MainWindow _mainWindow;
-        private PackageRegister _packageRegister;
+        private CountersPackageRegister _packageRegister;
 
-        public void init(PackageRegister packageRegister, MainWindow mainWindow)
+        public void init(CountersPackageRegister packageRegister, MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
             _packageRegister = packageRegister;
 
-            unpackPackageRegister();
+            displayPackageRegisterData();
 
-            _mainWindow.onAddNewPackageClick += importNewCountersPackage;
-            _mainWindow.onExtractByNumbersClick += extractNewPackageByNumbers;
+            _mainWindow.onAddNewPackageClick += importNewCountersPackageData;
+            //_mainWindow.onExtractByNumbersClick += extractNewPackageByNumbers;
         }
 
-        private void unpackPackageRegister()
+        private void displayPackageRegisterData()
         {
             if (_packageRegister.isEmpty)
             {
-                Debug.Log("DataController: " + "Register is empty");
+                Debug.Log("DataController: Package register is empty");
                 return;
             }
 
-            foreach (RegisterElementData registerData in _packageRegister.registerData)
+            foreach (PackageRegisterElementData registerData in _packageRegister.registerData)
             {
-                string path = registerData.path;
-                CountersPackageData counterPackageData = DataHandler.loadXML<CountersPackageData>(path, true);
-                _mainWindow.addPackageHoldersList(counterPackageData);
+                _mainWindow.displayRegistredData(registerData);
             }
         }
 
-        private void importNewCountersPackage()
+        private void importNewCountersPackageData()
         {
             string path = EditorUtility.OpenFilePanel("Import new CountersPackage", "", "xml");
             bool wrongPath = !path.Contains(".xml");
             if (wrongPath)
             {
-                Debug.Log("DataController: " + "WrongPath!");
+                Debug.Log("DataController: Wrong file path");
                 return;
             }
 
-            CountersPackageData counterPackageData = DataHandler.loadXML<CountersPackageData>(path, true);
-            _mainWindow.addPackageHoldersList(counterPackageData);
-            _packageRegister.addPackage(counterPackageData, path);
-            _packageRegister.saveRegister();
+            CountersPackageData countersPackageData = DataHandler.loadXML<CountersPackageData>(path);
+            CountersPackage countersPackage = new CountersPackage(countersPackageData, "default");
+            _packageRegister.addPackage(countersPackage);
+
+            int lastID = _packageRegister.lastID;
+            PackageRegisterElementData registerData = _packageRegister.getRegistredElement(lastID);
+            _mainWindow.displayRegistredData(registerData);
         }
+
+        //private void importNewCountersPackage()
+        //{
+        //    string path = EditorUtility.OpenFilePanel("Import new CountersPackage", "", "xml");
+        //    bool wrongPath = !path.Contains(".xml");
+        //    if (wrongPath)
+        //    {
+        //        Debug.Log("DataController: " + "WrongPath!");
+        //        return;
+        //    }
+
+        //    CountersPackageData counterPackageData = DataHandler.loadXML<CountersPackageData>(path, true);
+        //    _mainWindow.addPackageData(counterPackageData);
+        //    _packageRegister.addPackage(counterPackageData, path);
+        //    _packageRegister.saveRegister();
+        //}
 
         private void extractNewPackageByNumbers() //TO DO
         {
@@ -64,7 +81,7 @@ namespace CountersAnalysis
 
             List<string> numbers = DataHandler.readTExtFromFile(path);
             string packagePath = _packageRegister.registerData[0].path;
-            CountersPackageData referencePackage = DataHandler.loadXML<CountersPackageData>(packagePath, true);
+            CountersPackageData referencePackage = DataHandler.loadXML<CountersPackageData>(packagePath);
             CountersPackageData extractedPackage = extractPackageFromReference(referencePackage, numbers);
             MyLogger.LogPackage(extractedPackage);
         }

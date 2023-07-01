@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace CountersAnalysis
 {
@@ -16,19 +14,21 @@ namespace CountersAnalysis
     {
         [SerializeField] private MainWindow _mainWindowContentPanel;
 
-        private const string REGISTER_FILE_NAME = "RegisterData";
+        private const string REGISTER_FILE_NAME = "RegisterData.xml";
         private const string REM_TEST_FILE_NAME = "RemTestFile";
         private const string TEST_PACKAGE_FILE_NAME = "TestSavedPackage";
         private const string START_FILE_NAME = "A_Traven23";
         private const string END_FILE_NAME = "A_Cherven23";
 
-        private PackageRegister _packageRegister;
+        private CountersPackageRegister _packageRegister;
         private DataController _dataController;
 
         private void Start()
         {
-            _packageRegister = new PackageRegister();
-            _packageRegister.loadRegister(REGISTER_FILE_NAME);
+            _packageRegister = new CountersPackageRegister();
+            string defaultPath = Application.persistentDataPath + "/";
+            string registerPath = defaultPath + REGISTER_FILE_NAME;
+            _packageRegister.loadRegister(registerPath);
 
             _dataController = new DataController();
             _dataController.init(_packageRegister, _mainWindowContentPanel);
@@ -81,7 +81,7 @@ namespace CountersAnalysis
             counter.number = endData.number;
             counter.note = endData.note;
             counter.coeficient = endData.coeficient;
-            counter.scales = new List<CounterScale>();
+            counter.scales = new List<CounterScaleData>();
 
             int minLenght = Mathf.Min(startData.scales.Count, endData.scales.Count);
             for (int i = 0; i < minLenght; i++)
@@ -90,12 +90,12 @@ namespace CountersAnalysis
                 if (boothScalesIsActive)
                 {
                     int coeficient = endData.coeficient == 0 ? 1 : endData.coeficient;
-                    CounterScale scale = calculateConsumtion(coeficient, startData.scales[i], endData.scales[i]);
+                    CounterScaleData scale = calculateConsumtion(coeficient, startData.scales[i], endData.scales[i]);
                     counter.scales.Add(scale);
                 }
                 else
                 {
-                    CounterScale scale = endData.scales[i];
+                    CounterScaleData scale = endData.scales[i];
                     scale.value = 0;
                 }
             }
@@ -103,9 +103,9 @@ namespace CountersAnalysis
             return counter;
         }
 
-        private CounterScale calculateConsumtion(int coeficient, CounterScale startScale, CounterScale endScale)
+        private CounterScaleData calculateConsumtion(int coeficient, CounterScaleData startScale, CounterScaleData endScale)
         {
-            CounterScale scale = new CounterScale();
+            CounterScaleData scale = new CounterScaleData();
             scale.zoneNumber = endScale.zoneNumber;
             scale.isActive = endScale.isActive;
             scale.isBackward = endScale.isBackward;

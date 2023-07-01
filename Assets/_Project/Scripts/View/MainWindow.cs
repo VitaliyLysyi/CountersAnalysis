@@ -7,11 +7,11 @@ namespace CountersAnalysis
 {
     public class MainWindow : ContentPanel
     {
-        [SerializeField] private PackageHolder _packageHolderPrefab;
+        [SerializeField] private PackageDataHolder _packageDataHolderPrefab;
         [SerializeField] private Transform _observerPanelTransform;
         [SerializeField] private Button _addNewPackageButton;
         [SerializeField] private Button _extractByNumbers;
-        private List<PackageHolder> _packageHolders;
+        private List<PackageDataHolder> _packageHolders;
 
         public Action onAddNewPackageClick;
         public Action onExtractByNumbersClick;
@@ -22,10 +22,10 @@ namespace CountersAnalysis
             _extractByNumbers.onClick.AddListener(() => onExtractByNumbersClick?.Invoke());
         }
 
-        public void addPackageHoldersList(CountersPackageData package)
+        public void displayRegistredData(PackageRegisterElementData packageRegisterElementData)
         {
-            PackageHolder packageHolder = Instantiate(_packageHolderPrefab, _observerPanelTransform);
-            packageHolder.init(package);
+            PackageDataHolder packageDataHolder = Instantiate(_packageDataHolderPrefab, _observerPanelTransform);
+            packageDataHolder.init(packageRegisterElementData);
             //_packageHolders.Add(packageHolder);
         }
     }

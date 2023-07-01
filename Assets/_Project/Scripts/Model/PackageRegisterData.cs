@@ -8,7 +8,10 @@ namespace CountersAnalysis
     [XmlRoot("PackageRegister")]
     public struct PackageRegisterData
     {
+        [XmlAttribute("lastID")]
+        public int lastID;
+
         [XmlElement("RegisterElement")]
-        public List<RegisterElementData> registerData;
+        public List<PackageRegisterElementData> registerData;
     }
 }
