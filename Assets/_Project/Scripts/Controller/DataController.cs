@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,43 +16,48 @@ namespace CountersAnalysis
             _mainWindow = mainWindow;
             _packageRegister = packageRegister;
 
-            displayPackageRegisterData();
+            if (!_packageRegister.isEmpty)
+            {
+                foreach (PackageRegisterElementData registerData in _packageRegister.registerData)
+                {
+                    _mainWindow.displayRegistredData(registerData);
+                }
+            }
 
             _mainWindow.onAddNewPackageClick += importNewCountersPackageData;
             //_mainWindow.onExtractByNumbersClick += extractNewPackageByNumbers;
         }
 
-        private void displayPackageRegisterData()
+        private void importNewCountersPackageData()
         {
-            if (_packageRegister.isEmpty)
+            try
             {
-                Debug.Log("DataController: Package register is empty");
-                return;
+                string path = choseFilePathDialog("Import new CountersPackage", targetExtension: "xml");
+                CountersPackage countersPackage = new CountersPackage(path);
+                _packageRegister.addPackage(countersPackage);
+                _mainWindow.displayRegistredData(_packageRegister.lastRegistredData);
             }
-
-            foreach (PackageRegisterElementData registerData in _packageRegister.registerData)
+            catch (Exception exception)
             {
-                _mainWindow.displayRegistredData(registerData);
+                Debug.LogWarning("Impoort failed: " + exception.Message);
             }
         }
 
-        private void importNewCountersPackageData()
+        private string choseFilePathDialog(string title, string directory = "", string targetExtension = "")
         {
-            string path = EditorUtility.OpenFilePanel("Import new CountersPackage", "", "xml");
-            bool wrongPath = !path.Contains(".xml");
-            if (wrongPath)
+            string path = EditorUtility.OpenFilePanel(title, directory, targetExtension);
+            if (targetExtension == "")
             {
-                Debug.Log("DataController: Wrong file path");
-                return;
+                return path;
             }
 
-            CountersPackageData countersPackageData = DataHandler.loadXML<CountersPackageData>(path);
-            CountersPackage countersPackage = new CountersPackage(countersPackageData, "default");
-            _packageRegister.addPackage(countersPackage);
+            string fileExtension = Path.GetExtension(path);
+            if (fileExtension == ("." + targetExtension))
+            {
+                return path;
+            }
 
-            int lastID = _packageRegister.lastID;
-            PackageRegisterElementData registerData = _packageRegister.getRegistredElement(lastID);
-            _mainWindow.displayRegistredData(registerData);
+            throw new Exception("Wrong file path or extension");
         }
 
         //private void importNewCountersPackage()
@@ -69,53 +76,53 @@ namespace CountersAnalysis
         //    _packageRegister.saveRegister();
         //}
 
-        private void extractNewPackageByNumbers() //TO DO
-        {
-            string path = EditorUtility.OpenFilePanel("Select TXT with counter numbers", "", "txt");
-            bool wrongPath = !path.Contains(".txt");
-            if (wrongPath)
-            {
-                Debug.Log("DataController: " + "WrongPath!");
-                return;
-            }
+        //private void extractNewPackageByNumbers() //TO DO
+        //{
+        //    string path = EditorUtility.OpenFilePanel("Select TXT with counter numbers", "", "txt");
+        //    bool wrongPath = !path.Contains(".txt");
+        //    if (wrongPath)
+        //    {
+        //        Debug.Log("DataController: " + "WrongPath!");
+        //        return;
+        //    }
 
-            List<string> numbers = DataHandler.readTExtFromFile(path);
-            string packagePath = _packageRegister.registerData[0].path;
-            CountersPackageData referencePackage = DataHandler.loadXML<CountersPackageData>(packagePath);
-            CountersPackageData extractedPackage = extractPackageFromReference(referencePackage, numbers);
-            MyLogger.LogPackage(extractedPackage);
-        }
+        //    List<string> numbers = DataHandler.readTExtFromFile(path);
+        //    string packagePath = _packageRegister.registerData[0].path;
+        //    CountersPackageData referencePackage = DataHandler.loadXML<CountersPackageData>(packagePath);
+        //    CountersPackageData extractedPackage = extractPackageFromReference(referencePackage, numbers);
+        //    MyLogger.LogPackage(extractedPackage);
+        //}
 
-        private CountersPackageData extractPackageFromReference(CountersPackageData referencePackage, List<string> counterNumbers)
-        {
-            CountersPackageData resultPackage = new CountersPackageData();
-            resultPackage.date = referencePackage.date;
-            resultPackage.isFirstEventValue = referencePackage.isFirstEventValue;
+        //private CountersPackageData extractPackageFromReference(CountersPackageData referencePackage, List<string> counterNumbers)
+        //{
+        //    CountersPackageData resultPackage = new CountersPackageData();
+        //    resultPackage.date = referencePackage.date;
+        //    resultPackage.isFirstEventValue = referencePackage.isFirstEventValue;
 
-            resultPackage.counters = new List<CounterData>();
-            foreach (string counterNumber in counterNumbers)
-            {
-                CounterData counter = getCounterByNumber(referencePackage.counters, counterNumber);
-                bool notDefault = !counter.Equals(default(CounterData));
-                if (notDefault)
-                {
-                    resultPackage.counters.Add(counter);
-                }
-            }
-            return resultPackage;
-        }
+        //    resultPackage.counters = new List<CounterData>();
+        //    foreach (string counterNumber in counterNumbers)
+        //    {
+        //        CounterData counter = getCounterByNumber(referencePackage.counters, counterNumber);
+        //        bool notDefault = !counter.Equals(default(CounterData));
+        //        if (notDefault)
+        //        {
+        //            resultPackage.counters.Add(counter);
+        //        }
+        //    }
+        //    return resultPackage;
+        //}
 
-        private CounterData getCounterByNumber(List<CounterData> counters, string number)
-        {
-            foreach (CounterData counter in counters)
-            {
-                if (counter.number == number)
-                {
-                    return counter;
-                }
-            }
+        //private CounterData getCounterByNumber(List<CounterData> counters, string number)
+        //{
+        //    foreach (CounterData counter in counters)
+        //    {
+        //        if (counter.number == number)
+        //        {
+        //            return counter;
+        //        }
+        //    }
 
-            return default(CounterData);
-        }
+        //    return default(CounterData);
+        //}
     }
 }

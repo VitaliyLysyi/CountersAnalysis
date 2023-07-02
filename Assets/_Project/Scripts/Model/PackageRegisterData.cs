@@ -13,5 +13,11 @@ namespace CountersAnalysis
 
         [XmlElement("RegisterElement")]
         public List<PackageRegisterElementData> registerData;
+
+        public PackageRegisterData(int lastID, List<PackageRegisterElementData> registerData)
+        {
+            this.lastID = lastID;
+            this.registerData = registerData;
+        }
     }
 }
