@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -18,12 +17,13 @@ namespace CountersAnalysis
 
             if (!_packageRegister.isEmpty)
             {
-                foreach (PackageRegisterElementData registerData in _packageRegister.registerData)
+                foreach (RegistredPackageData registerData in _packageRegister.registerData)
                 {
                     _mainWindow.displayRegistredData(registerData);
                 }
             }
 
+            Application.quitting += onAppClose;
             _mainWindow.onAddNewPackageClick += importNewCountersPackageData;
             //_mainWindow.onExtractByNumbersClick += extractNewPackageByNumbers;
         }
@@ -58,6 +58,12 @@ namespace CountersAnalysis
             }
 
             throw new Exception("Wrong file path or extension");
+        }
+
+        private void onAppClose()
+        {
+            Application.quitting -= onAppClose;
+            _mainWindow.onAddNewPackageClick -= importNewCountersPackageData;
         }
 
         //private void importNewCountersPackage()

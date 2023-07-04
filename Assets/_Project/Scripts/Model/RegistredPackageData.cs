@@ -5,7 +5,7 @@ namespace CountersAnalysis
 {
     [Serializable]
     [XmlRoot("RegisterElement")]
-    public struct PackageRegisterElementData
+    public struct RegistredPackageData
     {
         [XmlElement("RegisterID")]
         public int registerID;
@@ -31,7 +31,7 @@ namespace CountersAnalysis
         [XmlElement("CountersCount")]
         public int countersCount;
 
-        public PackageRegisterElementData(CountersPackage package, int id, string packagePath)
+        public RegistredPackageData(CountersPackage package, int id, string packagePath)
         {
             registerID = id;
             name = package.name;

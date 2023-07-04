@@ -2,38 +2,37 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEngine;
 
 namespace CountersAnalysis
 {
     public class CountersPackageRegister
     {
         private int _lastID;
-        private List<PackageRegisterElementData> _registerData;
+        private List<RegistredPackageData> _registerData;
 
         public void addPackage(CountersPackage package)
         {
-            PackageRegisterElementData registerElement = getRegistredElement(package.name);
-            bool elementNotRegistred = registerElement.Equals(default(PackageRegisterElementData));
+            RegistredPackageData registerElement = getRegistredElement(package.name);
+            bool elementNotRegistred = registerElement.Equals(default(RegistredPackageData));
             if (!elementNotRegistred)
             {
                 throw new Exception("Package already registred!");
             }
 
             string registredPath = Constants.REGISTRED_PACKAGES_DIRECTORY + "/" + package.name + ".xml";
-            PackageRegisterElementData registerData = new PackageRegisterElementData(package, ++_lastID, registredPath);
+            RegistredPackageData registerData = new RegistredPackageData(package, ++_lastID, registredPath);
             _registerData.Add(registerData);
 
             package.save(registerData.path);
             saveRegister();
         }
 
-        public PackageRegisterElementData getRegistredElement(int id)
+        public RegistredPackageData getRegistredElement(int id)
         {
             return _registerData.FirstOrDefault(element => element.registerID == id);
         }
 
-        public PackageRegisterElementData getRegistredElement(string name)
+        public RegistredPackageData getRegistredElement(string name)
         {
             return _registerData.FirstOrDefault(element => element.name == name);
         }
@@ -41,7 +40,6 @@ namespace CountersAnalysis
         public void loadRegister()
         {
             string path = Constants.DEFAULT_REGISTER_FILE_PATH;
-            Debug.Log("Register path: " + path);
             PackageRegisterData packageRegisterData = DataHandler.loadXML<PackageRegisterData>(path);
 
             bool registerDataNotExist = packageRegisterData.Equals(default(PackageRegisterData));
@@ -53,13 +51,12 @@ namespace CountersAnalysis
 
             _lastID = packageRegisterData.lastID;
             _registerData = packageRegisterData.registerData;
-
         }
 
         private void createRegister()
         {
             _lastID = 0;
-            _registerData = new List<PackageRegisterElementData>();
+            _registerData = new List<RegistredPackageData>();
 
             if (!Directory.Exists(Constants.REGISTRED_PACKAGES_DIRECTORY))
             {
@@ -76,8 +73,8 @@ namespace CountersAnalysis
 
         public bool isEmpty => _registerData.Count == 0 ? true : false;
 
-        public List<PackageRegisterElementData> registerData => _registerData;
+        public List<RegistredPackageData> registerData => _registerData;
 
-        public PackageRegisterElementData lastRegistredData => _registerData.LastOrDefault();
+        public RegistredPackageData lastRegistredData => _registerData.LastOrDefault();
     }
 }

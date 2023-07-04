@@ -12,9 +12,9 @@ namespace CountersAnalysis
         public int lastID;
 
         [XmlElement("RegisterElement")]
-        public List<PackageRegisterElementData> registerData;
+        public List<RegistredPackageData> registerData;
 
-        public PackageRegisterData(int lastID, List<PackageRegisterElementData> registerData)
+        public PackageRegisterData(int lastID, List<RegistredPackageData> registerData)
         {
             this.lastID = lastID;
             this.registerData = registerData;

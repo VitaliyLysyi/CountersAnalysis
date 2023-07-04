@@ -7,26 +7,55 @@ namespace CountersAnalysis
 {
     public class MainWindow : ContentPanel
     {
-        [SerializeField] private PackageDataHolder _packageDataHolderPrefab;
+        [SerializeField] private RegistredDataHolder _registredDataHolderPrefab;
+        [SerializeField] private RegistredDataConfigWindow _registredDataConfigWindow;
         [SerializeField] private Transform _observerPanelTransform;
         [SerializeField] private Button _addNewPackageButton;
         [SerializeField] private Button _extractByNumbers;
-        private List<PackageDataHolder> _packageHolders;
+        private List<RegistredDataHolder> _registredDataHolders;
 
-        public Action onAddNewPackageClick;
-        public Action onExtractByNumbersClick;
+        public event Action onAddNewPackageClick;
+        public event Action onExtractByNumbersClick;
 
-        private void Start()
+        public void init()
         {
+            _registredDataConfigWindow.hide();
+            _registredDataHolders = new List<RegistredDataHolder>();
             _addNewPackageButton.onClick.AddListener(() => onAddNewPackageClick?.Invoke());
             _extractByNumbers.onClick.AddListener(() => onExtractByNumbersClick?.Invoke());
         }
 
-        public void displayRegistredData(PackageRegisterElementData packageRegisterElementData)
+        public void displayRegistredData(RegistredPackageData packageRegisterElementData)
         {
-            PackageDataHolder packageDataHolder = Instantiate(_packageDataHolderPrefab, _observerPanelTransform);
+            RegistredDataHolder packageDataHolder = Instantiate(_registredDataHolderPrefab, _observerPanelTransform);
             packageDataHolder.init(packageRegisterElementData);
-            //_packageHolders.Add(packageHolder);
+            packageDataHolder.onConfigButtonClick += registredDataConfigShow;
+            _registredDataHolders.Add(packageDataHolder);
+        }
+
+        private void registredDataConfigShow(RegistredDataHolder registredDataHolder)
+        {
+            _registredDataConfigWindow.init(registredDataHolder.getRegistredData);
+            _registredDataConfigWindow.show();
+        }
+
+        private void unsubscribeAllDataHolders()
+        {
+            foreach (RegistredDataHolder dataHolder in _registredDataHolders)
+            {
+                dataHolder.onConfigButtonClick -= registredDataConfigShow;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_registredDataHolders.Count == 0)
+            {
+                unsubscribeAllDataHolders();
+            }
+
+            _addNewPackageButton.onClick.RemoveAllListeners();
+            _extractByNumbers.onClick.RemoveAllListeners();
         }
     }
 }

@@ -1,15 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace CountersAnalysis
 {
-    public enum CountersPackageType
-    {
-        PowerConsumption,
-        CountersData
-    }
-
     public class StartPoint : MonoBehaviour
     {
         [SerializeField] private MainWindow _mainWindowContentPanel;
@@ -18,6 +10,8 @@ namespace CountersAnalysis
 
         private void Start()
         {
+            _mainWindowContentPanel.init();
+
             _packageRegister = new CountersPackageRegister();
             _packageRegister.loadRegister();
 

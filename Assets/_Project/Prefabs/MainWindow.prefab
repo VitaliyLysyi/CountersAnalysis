@@ -669,7 +669,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 450, y: 140}
+  m_CellSize: {x: 450, y: 150}
   m_Spacing: {x: 15, y: 15}
   m_Constraint: 1
   m_ConstraintCount: 4
@@ -828,7 +828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df750ca197b6c44ca31f72e27edca39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _packageDataHolderPrefab: {fileID: 9028766407161237342, guid: a9faf09ea0d44814cb18719bba0bd81b,
+  _registredDataHolderPrefab: {fileID: 9028766407161237342, guid: a9faf09ea0d44814cb18719bba0bd81b,
     type: 3}
   _observerPanelTransform: {fileID: 5550687015726039294}
   _addNewPackageButton: {fileID: 1433871094243587770}
