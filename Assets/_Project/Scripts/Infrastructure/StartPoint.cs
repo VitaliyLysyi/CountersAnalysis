@@ -5,6 +5,7 @@ namespace CountersAnalysis
     public class StartPoint : MonoBehaviour
     {
         [SerializeField] private MainWindow _mainWindowContentPanel;
+        [SerializeField] private RegistredDataConfigWindow _registeredDataConfigWindow;
         private CountersPackageRegister _packageRegister;
         private DataController _dataController;
 
@@ -12,11 +13,17 @@ namespace CountersAnalysis
         {
             _mainWindowContentPanel.init();
 
+            _registeredDataConfigWindow.hide();
+
             _packageRegister = new CountersPackageRegister();
             _packageRegister.loadRegister();
 
             _dataController = new DataController();
-            _dataController.init(_packageRegister, _mainWindowContentPanel);
+            _dataController.init(
+                _packageRegister, 
+                _mainWindowContentPanel,
+                _registeredDataConfigWindow
+                );
         }
 
         //private CountersPackageData makeConsumptionPackage(

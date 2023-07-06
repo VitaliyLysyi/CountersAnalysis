@@ -11,22 +11,20 @@ namespace CountersAnalysis
         [SerializeField] private TextMeshProUGUI _packageNameText;
         [SerializeField] private TextMeshProUGUI _noteText;
         [SerializeField] private TextMeshProUGUI _dateText;
-        private RegistredPackageData _registredData;
+        private int _dataID;
 
-        public event Action<RegistredDataHolder> onConfigButtonClick;
+        public event Action<int> onConfigButtonClick;
 
         public void init(RegistredPackageData registredData)
         {
-            _registredData = registredData;
+            _dataID = registredData.registerID;
             _packageNameText.text = registredData.name;
             _noteText.text = registredData.note;
             _dateText.text = registredData.date.ToString();
-            _configButton.onClick.AddListener(() => onConfigButtonClick?.Invoke(this));
+            _configButton.onClick.AddListener(() => onConfigButtonClick?.Invoke(_dataID));
         }
 
-        public int id => _registredData.registerID;
-
-        public RegistredPackageData getRegistredData => _registredData;
+        public int id => _dataID;
 
         private void OnDestroy()
         {

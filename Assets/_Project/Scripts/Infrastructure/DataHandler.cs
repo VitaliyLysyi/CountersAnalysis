@@ -8,7 +8,7 @@ namespace CountersAnalysis
 {
     public static class DataHandler
     {
-        private const string XML_FORMAT = ".xml";
+        //C:/Users/VITALIY/AppData/LocalLow/DefaultCompany/CountersAnalysis/
         private static readonly string _dataPath = Application.persistentDataPath + "/";
 
         public static void save<T>(T data, string dataName) where T : class
@@ -62,7 +62,6 @@ namespace CountersAnalysis
         public static T loadXML<T>(string filePath) where T : struct
         {
             //Debug.Log("Data Handler: " + filePath);
-            //C:/Users/VITALIY/AppData/LocalLow/DefaultCompany/CountersAnalysis/
 
             if (File.Exists(filePath))
             {
@@ -85,6 +84,17 @@ namespace CountersAnalysis
                 return File.ReadAllLines(filePath).ToList();
             }
             return null;
+        }
+
+        public static void deleteFile(string path)
+        {
+            if (File.Exists (path))
+            {
+                File.Delete(path);
+                return;
+            }
+
+            Debug.Log("Data Handler: " + "File not deleted - file not found!");
         }
     }
 }

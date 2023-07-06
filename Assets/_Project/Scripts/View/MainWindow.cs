@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,54 +9,47 @@ namespace CountersAnalysis
     public class MainWindow : ContentPanel
     {
         [SerializeField] private RegistredDataHolder _registredDataHolderPrefab;
-        [SerializeField] private RegistredDataConfigWindow _registredDataConfigWindow;
         [SerializeField] private Transform _observerPanelTransform;
         [SerializeField] private Button _addNewPackageButton;
-        [SerializeField] private Button _extractByNumbers;
         private List<RegistredDataHolder> _registredDataHolders;
 
         public event Action onAddNewPackageClick;
-        public event Action onExtractByNumbersClick;
+        public event Action<int> onOpenConfigWindowClick;
 
         public void init()
         {
-            _registredDataConfigWindow.hide();
             _registredDataHolders = new List<RegistredDataHolder>();
             _addNewPackageButton.onClick.AddListener(() => onAddNewPackageClick?.Invoke());
-            _extractByNumbers.onClick.AddListener(() => onExtractByNumbersClick?.Invoke());
         }
 
         public void displayRegistredData(RegistredPackageData packageRegisterElementData)
         {
             RegistredDataHolder packageDataHolder = Instantiate(_registredDataHolderPrefab, _observerPanelTransform);
             packageDataHolder.init(packageRegisterElementData);
-            packageDataHolder.onConfigButtonClick += registredDataConfigShow;
+            packageDataHolder.onConfigButtonClick += onOpenConfigWindowInvoke;
             _registredDataHolders.Add(packageDataHolder);
         }
 
-        private void registredDataConfigShow(RegistredDataHolder registredDataHolder)
+        public void removeDataHolder(int dataID)
         {
-            _registredDataConfigWindow.init(registredDataHolder.getRegistredData);
-            _registredDataConfigWindow.show();
+            RegistredDataHolder holder = _registredDataHolders.FirstOrDefault(element => element.id == dataID);
+            _registredDataHolders.Remove(holder);
+            Destroy(holder.gameObject);
         }
 
-        private void unsubscribeAllDataHolders()
+        private void onOpenConfigWindowInvoke(int dataID)
         {
-            foreach (RegistredDataHolder dataHolder in _registredDataHolders)
-            {
-                dataHolder.onConfigButtonClick -= registredDataConfigShow;
-            }
+            onOpenConfigWindowClick?.Invoke(dataID);
         }
 
         private void OnDestroy()
         {
-            if (_registredDataHolders.Count == 0)
+            foreach (RegistredDataHolder dataHolder in _registredDataHolders)
             {
-                unsubscribeAllDataHolders();
+                dataHolder.onConfigButtonClick -= onOpenConfigWindowClick;
             }
 
             _addNewPackageButton.onClick.RemoveAllListeners();
-            _extractByNumbers.onClick.RemoveAllListeners();
         }
     }
 }

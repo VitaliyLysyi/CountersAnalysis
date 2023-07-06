@@ -27,6 +27,14 @@ namespace CountersAnalysis
             saveRegister();
         }
 
+        public void removeRegistred(int registredID)
+        {
+            RegistredPackageData data = _registerData.FirstOrDefault(element => element.registerID == registredID);
+            DataHandler.deleteFile(data.path);
+            _registerData.Remove(data);
+            saveRegister();
+        }
+
         public RegistredPackageData getRegistredElement(int id)
         {
             return _registerData.FirstOrDefault(element => element.registerID == id);

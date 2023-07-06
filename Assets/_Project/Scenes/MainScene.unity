@@ -487,6 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainWindowContentPanel: {fileID: 1927015018}
+  _registeredDataConfigWindow: {fileID: 281293805}
 --- !u!1 &1090954716
 GameObject:
   m_ObjectHideFlags: 0

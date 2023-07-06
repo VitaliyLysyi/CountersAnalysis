@@ -8,24 +8,28 @@ namespace CountersAnalysis
     public class DataController
     {
         private MainWindow _mainWindow;
+        private RegistredDataConfigWindow _configWindow;
         private CountersPackageRegister _packageRegister;
 
-        public void init(CountersPackageRegister packageRegister, MainWindow mainWindow)
+        public void init(
+            CountersPackageRegister packageRegister, 
+            MainWindow mainWindow,
+            RegistredDataConfigWindow registerDataConfigWindow
+            )
         {
             _mainWindow = mainWindow;
+            _configWindow = registerDataConfigWindow;
             _packageRegister = packageRegister;
 
-            if (!_packageRegister.isEmpty)
+            foreach (RegistredPackageData registerData in _packageRegister.registerData)
             {
-                foreach (RegistredPackageData registerData in _packageRegister.registerData)
-                {
-                    _mainWindow.displayRegistredData(registerData);
-                }
-            }
+                _mainWindow.displayRegistredData(registerData);
+            }            
 
             Application.quitting += onAppClose;
             _mainWindow.onAddNewPackageClick += importNewCountersPackageData;
-            //_mainWindow.onExtractByNumbersClick += extractNewPackageByNumbers;
+            _mainWindow.onOpenConfigWindowClick += showConfigWindow;
+            _configWindow.onDeleteClick += deleteRegistredData;
         }
 
         private void importNewCountersPackageData()
@@ -60,10 +64,25 @@ namespace CountersAnalysis
             throw new Exception("Wrong file path or extension");
         }
 
+        private void showConfigWindow(int dataID)
+        {
+            RegistredPackageData packageData = _packageRegister.getRegistredElement(dataID);
+            _configWindow.init(packageData);
+            _configWindow.show();
+        }
+
+        private void deleteRegistredData(int dataID)
+        {
+            _packageRegister.removeRegistred(dataID);
+            _mainWindow.removeDataHolder(dataID);
+        }
+
         private void onAppClose()
         {
             Application.quitting -= onAppClose;
             _mainWindow.onAddNewPackageClick -= importNewCountersPackageData;
+            _mainWindow.onOpenConfigWindowClick -= showConfigWindow;
+            _configWindow.onDeleteClick -= deleteRegistredData;
         }
 
         //private void importNewCountersPackage()
