@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 8779054200541592645}
   - component: {fileID: 6914953953661082691}
   m_Layer: 5
-  m_Name: ExtractButton
+  m_Name: ConsumptionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 298999c03f2628d4ebe8fd0f2a7c0ce2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6b1219174becfe44996390d68927a836, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -508,7 +508,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1880, y: 40}
+  m_SizeDelta: {x: 1880, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1398112490050348412
 CanvasRenderer:
@@ -568,7 +568,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 30, y: 30}
+  m_CellSize: {x: 40, y: 40}
   m_Spacing: {x: 2.5, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
@@ -832,7 +832,7 @@ MonoBehaviour:
     type: 3}
   _observerPanelTransform: {fileID: 5550687015726039294}
   _addNewPackageButton: {fileID: 1433871094243587770}
-  _extractByNumbers: {fileID: 6914953953661082691}
+  _makeConsumptionPackageButton: {fileID: 6914953953661082691}
 --- !u!1 &6610140451798772370
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,7 +967,7 @@ GameObject:
   - component: {fileID: 7356029903072492312}
   - component: {fileID: 7094933843035364889}
   m_Layer: 5
-  m_Name: ExtractButtonHolder
+  m_Name: ConsumptionButtonHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

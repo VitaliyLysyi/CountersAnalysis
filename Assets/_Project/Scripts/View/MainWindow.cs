@@ -11,15 +11,18 @@ namespace CountersAnalysis
         [SerializeField] private RegistredDataHolder _registredDataHolderPrefab;
         [SerializeField] private Transform _observerPanelTransform;
         [SerializeField] private Button _addNewPackageButton;
+        [SerializeField] private Button _makeConsumptionPackageButton;
         private List<RegistredDataHolder> _registredDataHolders;
 
         public event Action onAddNewPackageClick;
+        public event Action onMakeConsumptionPackageClick;
         public event Action<int> onOpenConfigWindowClick;
 
         public void init()
         {
             _registredDataHolders = new List<RegistredDataHolder>();
             _addNewPackageButton.onClick.AddListener(() => onAddNewPackageClick?.Invoke());
+            _makeConsumptionPackageButton.onClick.AddListener(() => onMakeConsumptionPackageClick?.Invoke());
         }
 
         public void displayRegistredData(RegistredPackageData packageRegisterElementData)
@@ -50,6 +53,7 @@ namespace CountersAnalysis
             }
 
             _addNewPackageButton.onClick.RemoveAllListeners();
+            _makeConsumptionPackageButton.onClick.RemoveAllListeners();
         }
     }
 }

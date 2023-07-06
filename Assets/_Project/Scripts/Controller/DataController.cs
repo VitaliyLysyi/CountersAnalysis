@@ -9,16 +9,19 @@ namespace CountersAnalysis
     {
         private MainWindow _mainWindow;
         private RegistredDataConfigWindow _configWindow;
+        private MakeConsumptionPackageWindow _makeConsumptionPackageWindow;
         private CountersPackageRegister _packageRegister;
 
         public void init(
             CountersPackageRegister packageRegister, 
             MainWindow mainWindow,
-            RegistredDataConfigWindow registerDataConfigWindow
+            RegistredDataConfigWindow registerDataConfigWindow,
+            MakeConsumptionPackageWindow makeConsumptionPackageWindow
             )
         {
             _mainWindow = mainWindow;
             _configWindow = registerDataConfigWindow;
+            _makeConsumptionPackageWindow = makeConsumptionPackageWindow;
             _packageRegister = packageRegister;
 
             foreach (RegistredPackageData registerData in _packageRegister.registerData)
@@ -29,6 +32,7 @@ namespace CountersAnalysis
             Application.quitting += onAppClose;
             _mainWindow.onAddNewPackageClick += importNewCountersPackageData;
             _mainWindow.onOpenConfigWindowClick += showConfigWindow;
+            _mainWindow.onMakeConsumptionPackageClick += showMakeConsumptionPackageWindow;
             _configWindow.onDeleteClick += deleteRegistredData;
         }
 
@@ -77,29 +81,19 @@ namespace CountersAnalysis
             _mainWindow.removeDataHolder(dataID);
         }
 
+        private void showMakeConsumptionPackageWindow()
+        {
+            _makeConsumptionPackageWindow.show();
+        }
+
         private void onAppClose()
         {
             Application.quitting -= onAppClose;
             _mainWindow.onAddNewPackageClick -= importNewCountersPackageData;
             _mainWindow.onOpenConfigWindowClick -= showConfigWindow;
+            _mainWindow.onMakeConsumptionPackageClick -= showMakeConsumptionPackageWindow;
             _configWindow.onDeleteClick -= deleteRegistredData;
         }
-
-        //private void importNewCountersPackage()
-        //{
-        //    string path = EditorUtility.OpenFilePanel("Import new CountersPackage", "", "xml");
-        //    bool wrongPath = !path.Contains(".xml");
-        //    if (wrongPath)
-        //    {
-        //        Debug.Log("DataController: " + "WrongPath!");
-        //        return;
-        //    }
-
-        //    CountersPackageData counterPackageData = DataHandler.loadXML<CountersPackageData>(path, true);
-        //    _mainWindow.addPackageData(counterPackageData);
-        //    _packageRegister.addPackage(counterPackageData, path);
-        //    _packageRegister.saveRegister();
-        //}
 
         //private void extractNewPackageByNumbers() //TO DO
         //{
@@ -135,19 +129,6 @@ namespace CountersAnalysis
         //        }
         //    }
         //    return resultPackage;
-        //}
-
-        //private CounterData getCounterByNumber(List<CounterData> counters, string number)
-        //{
-        //    foreach (CounterData counter in counters)
-        //    {
-        //        if (counter.number == number)
-        //        {
-        //            return counter;
-        //        }
-        //    }
-
-        //    return default(CounterData);
         //}
     }
 }

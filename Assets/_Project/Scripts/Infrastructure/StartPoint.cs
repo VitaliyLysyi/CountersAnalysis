@@ -6,6 +6,7 @@ namespace CountersAnalysis
     {
         [SerializeField] private MainWindow _mainWindowContentPanel;
         [SerializeField] private RegistredDataConfigWindow _registeredDataConfigWindow;
+        [SerializeField] private MakeConsumptionPackageWindow _makeConsumptionPackageWindow;
         private CountersPackageRegister _packageRegister;
         private DataController _dataController;
 
@@ -14,6 +15,7 @@ namespace CountersAnalysis
             _mainWindowContentPanel.init();
 
             _registeredDataConfigWindow.hide();
+            _makeConsumptionPackageWindow.hide();
 
             _packageRegister = new CountersPackageRegister();
             _packageRegister.loadRegister();
@@ -22,7 +24,8 @@ namespace CountersAnalysis
             _dataController.init(
                 _packageRegister, 
                 _mainWindowContentPanel,
-                _registeredDataConfigWindow
+                _registeredDataConfigWindow,
+                _makeConsumptionPackageWindow
                 );
         }
 
