@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using UnityEngine;
 
 namespace CountersAnalysis
 {
@@ -19,5 +20,33 @@ namespace CountersAnalysis
 
         [XmlElement("Scale")]
         public List<CounterScaleData> scales;
+
+        public static CounterData makeCounterConsumptionData(CounterData fromCounter, CounterData toCounter)
+        {
+            CounterData consumptionData = new CounterData();
+            consumptionData.number = toCounter.number;
+            consumptionData.coeficient = toCounter.coeficient;
+            consumptionData.note = toCounter.note;
+            consumptionData.scales = new List<CounterScaleData>();
+
+            int minLenght = Mathf.Min(fromCounter.scales.Count, toCounter.scales.Count);
+            for (int i = 0; i < minLenght; i++)
+            {
+                bool boothScalesIsActive = fromCounter.scales[i].isActive && toCounter.scales[i].isActive;
+                if (boothScalesIsActive)
+                {
+                    int coeficient = toCounter.coeficient == 0 ? 1 : toCounter.coeficient;
+                    CounterScaleData scale = CounterScaleData.calculateConsumption(coeficient, fromCounter.scales[i], toCounter.scales[i]);
+                    consumptionData.scales.Add(scale);
+                }
+                else
+                {
+                    CounterScaleData scale = toCounter.scales[i];
+                    scale.value = 0;
+                }
+            }
+
+            return consumptionData;
+        }
     }
 }

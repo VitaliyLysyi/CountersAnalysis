@@ -33,6 +33,7 @@ namespace CountersAnalysis
             _mainWindow.onAddNewPackageClick += importNewCountersPackageData;
             _mainWindow.onOpenConfigWindowClick += showConfigWindow;
             _mainWindow.onMakeConsumptionPackageClick += showMakeConsumptionPackageWindow;
+            _makeConsumptionPackageWindow.onAcceptButtonClick += createConsumptionPackage;
             _configWindow.onDeleteClick += deleteRegistredData;
         }
 
@@ -83,7 +84,19 @@ namespace CountersAnalysis
 
         private void showMakeConsumptionPackageWindow()
         {
+            _makeConsumptionPackageWindow.init(_packageRegister.registerData);
             _makeConsumptionPackageWindow.show();
+        }
+
+        private void createConsumptionPackage(string fromPackageName, string toPackageName)
+        {
+            RegistredPackageData fromPackageData = _packageRegister.getRegistredElement(fromPackageName);
+            RegistredPackageData toPackageData = _packageRegister.getRegistredElement(toPackageName);
+            CountersPackage fromPackage = new CountersPackage(fromPackageData.path);
+            CountersPackage toPackage = new CountersPackage(toPackageData.path);
+            CountersPackage consumptionPackage = CountersPackage.makeConsumptionPackage(fromPackage, toPackage);
+            _packageRegister.addPackage(consumptionPackage);
+            _mainWindow.displayRegistredData(_packageRegister.lastRegistredData);
         }
 
         private void onAppClose()
