@@ -21,6 +21,18 @@ namespace CountersAnalysis
         [XmlElement("Scale")]
         public List<CounterScaleData> scales;
 
+        public string counterCSVString()
+        {
+            string result = string.Empty;
+            result += number;
+            result += ", " + note;
+            foreach (var scale in scales)
+            {
+                result += ", " + Mathf.Round(scale.value);
+            }
+            return result;
+        }
+
         public static CounterData makeCounterConsumptionData(CounterData fromCounter, CounterData toCounter)
         {
             CounterData consumptionData = new CounterData();

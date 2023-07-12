@@ -35,6 +35,7 @@ namespace CountersAnalysis
             _mainWindow.onMakeConsumptionPackageClick += showMakeConsumptionPackageWindow;
             _makeConsumptionPackageWindow.onAcceptButtonClick += createConsumptionPackage;
             _configWindow.onDeleteClick += deleteRegistredData;
+            _configWindow.onExportClick += exportPackageData;
         }
 
         private void importNewCountersPackageData()
@@ -98,6 +99,23 @@ namespace CountersAnalysis
             _packageRegister.addPackage(consumptionPackage);
             _mainWindow.displayRegistredData(_packageRegister.lastRegistredData);
         }
+
+        private void exportPackageData(int dataID)
+        {
+            try
+            {
+                RegistredPackageData packageData = _packageRegister.getRegistredElement(dataID);
+                string name = packageData.name;
+                string folderPath = EditorUtility.OpenFolderPanel("Export Package Data to folder", "", "");
+                string filePath = folderPath + "/" + name + ".csv";
+                CountersPackage package = new CountersPackage(packageData.path);
+                DataHandler.saveCSV(filePath, package.packageCSVstring);
+        }
+            catch (Exception exception)
+            {
+                Debug.LogWarning("Export failed: " + exception.Message);
+            }
+}
 
         private void onAppClose()
         {

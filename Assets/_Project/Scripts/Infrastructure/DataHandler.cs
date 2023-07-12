@@ -77,7 +77,7 @@ namespace CountersAnalysis
             return default;
         }
 
-        public static List<string> readTExtFromFile(string filePath)
+        public static List<string> readTextFromFile(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -95,6 +95,16 @@ namespace CountersAnalysis
             }
 
             Debug.Log("Data Handler: " + "File not deleted - file not found!");
+        }
+
+        public static void saveCSV(string filePath, List<string> stringList)
+        {
+            TextWriter writer = new StreamWriter(filePath);
+            foreach (string str in stringList)
+            {
+                writer.WriteLine(str);
+            }
+            writer.Close();
         }
     }
 }

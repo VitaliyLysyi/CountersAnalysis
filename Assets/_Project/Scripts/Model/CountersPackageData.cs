@@ -22,5 +22,21 @@ namespace CountersAnalysis
 
         [XmlElement("Counter")]
         public List<CounterData> counters;
+
+        public List<string> packageCSVStringList()
+        {
+            List<string> list = new List<string>();
+            list.Add("Date: " + date);
+            list.Add("Note: " + note);
+            list.Add("Number:, Check ID:, Customer, A+(1), A+(2), A+(3), A+(4), A-(1), A-(2), A-(3), A-(4)");
+            list.Add("Head Counter: ");
+            list.Add(headCounter.counterCSVString());
+            list.Add("Counters: ");
+            foreach (CounterData counter in counters)
+            {
+                list.Add(counter.counterCSVString());
+            }
+            return list;
+        }
     }
 }

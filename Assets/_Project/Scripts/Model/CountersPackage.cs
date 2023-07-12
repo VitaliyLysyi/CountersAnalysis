@@ -20,6 +20,7 @@ namespace CountersAnalysis
         public DateTime date => _packageData.date;
         public CounterData headCounter => _packageData.headCounter;
         public int countersCount => _packageData.counters.Count;
+        public List<string> packageCSVstring => _packageData.packageCSVStringList();
 
         public CountersPackage() { }
 

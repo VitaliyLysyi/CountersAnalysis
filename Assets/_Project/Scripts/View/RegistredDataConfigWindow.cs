@@ -18,14 +18,17 @@ namespace CountersAnalysis
         [Header("Buttons")]
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _deleteButton;
+        [SerializeField] private Button _exportToExcelButton;
         private int _dataID;
 
         public event Action<int> onDeleteClick;
+        public event Action<int> onExportClick;
 
         private void Start()
         {
             _closeButton.onClick.AddListener(hide);
             _deleteButton.onClick.AddListener(onDeleteClickInvoke);
+            _exportToExcelButton.onClick.AddListener(onExportClickInvoke);
         }
 
         public void init(RegistredPackageData packageData)
@@ -51,10 +54,16 @@ namespace CountersAnalysis
             hide();
         }
 
+        private void onExportClickInvoke()
+        {
+            onExportClick?.Invoke(_dataID);
+        }
+
         private void OnDestroy()
         {
             _closeButton.onClick.RemoveAllListeners();
             _deleteButton.onClick.RemoveAllListeners();
+            _exportToExcelButton.onClick.RemoveAllListeners();
         }
     }
 }
