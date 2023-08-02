@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CountersAnalysis
 {
-    public class DataController
+    public class DataPresenter
     {
         private MainWindow _mainWindow;
         private RegistredDataConfigWindow _configWindow;
