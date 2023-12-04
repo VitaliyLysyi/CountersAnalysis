@@ -91,13 +91,13 @@ namespace CountersAnalysis
 
         private void createConsumptionPackage(string fromPackageName, string toPackageName)
         {
-            RegistredPackageData fromPackageData = _packageRegister.getRegistredElement(fromPackageName);
-            RegistredPackageData toPackageData = _packageRegister.getRegistredElement(toPackageName);
-            CountersPackage fromPackage = new CountersPackage(fromPackageData.path);
-            CountersPackage toPackage = new CountersPackage(toPackageData.path);
-            CountersPackage consumptionPackage = CountersPackage.makeConsumptionPackage(fromPackage, toPackage);
-            _packageRegister.addPackage(consumptionPackage);
-            _mainWindow.displayRegistredData(_packageRegister.lastRegistredData);
+            //RegistredPackageData fromPackageData = _packageRegister.getRegistredElement(fromPackageName);
+            //RegistredPackageData toPackageData = _packageRegister.getRegistredElement(toPackageName);
+            //CountersPackage fromPackage = new CountersPackage(fromPackageData.path);
+            //CountersPackage toPackage = new CountersPackage(toPackageData.path);
+            //CountersPackage consumptionPackage = CountersPackage.makeConsumptionPackage(fromPackage, toPackage);
+            //_packageRegister.addPackage(consumptionPackage);
+            //_mainWindow.displayRegistredData(_packageRegister.lastRegistredData);
         }
 
         private void exportPackageData(int dataID)

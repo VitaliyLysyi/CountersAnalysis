@@ -42,11 +42,11 @@ namespace CountersAnalysis
         {
             string spacingString = new string('.', spacing); 
             Debug.Log(spacingString 
-                + "Scale = " + scale.zoneNumber 
+                + "Scale = " + scale.zoneType 
                 + " Value = " + scale.value 
                 + " IsActive = " + scale.isActive 
                 + " IsBackward = " + scale.isBackward
-                + " IsErrored = " + scale.isErrored
+                + " IsErrored = " + scale.isError
                 );
         }
     }
