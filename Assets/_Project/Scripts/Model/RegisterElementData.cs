@@ -5,7 +5,7 @@ namespace CountersAnalysis
 {
     [Serializable]
     [XmlRoot("RegisterElement")]
-    public struct RegistredPackageData
+    public struct RegisterElementData
     {
         [XmlElement("RegisterID")]
         public int registerID;
@@ -25,13 +25,7 @@ namespace CountersAnalysis
         [XmlElement("Path")]
         public string path;
 
-        [XmlElement("HeadCounterNumber")]
-        public string headCounterNumber;
-
-        [XmlElement("CountersCount")]
-        public int countersCount;
-
-        public RegistredPackageData(CountersPackage package, int id, string packagePath)
+        public RegisterElementData(CountersPackage package, int id, string packagePath)
         {
             registerID = id;
             name = package.name;
@@ -39,8 +33,6 @@ namespace CountersAnalysis
             note = package.note;
             date = package.date;
             path = packagePath;
-            headCounterNumber = package.headCounter.number;
-            countersCount = package.countersCount;
         }
     }
 }

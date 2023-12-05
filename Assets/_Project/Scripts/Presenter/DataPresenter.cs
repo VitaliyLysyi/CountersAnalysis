@@ -7,14 +7,14 @@ namespace CountersAnalysis
 {
     public class DataPresenter
     {
-        private MainWindow _mainWindow;
+        private MainWindowOld _mainWindow;
         private RegistredDataConfigWindow _configWindow;
         private MakeConsumptionPackageWindow _makeConsumptionPackageWindow;
-        private CountersPackageRegister _packageRegister;
+        private Register _packageRegister;
 
         public void init(
-            CountersPackageRegister packageRegister, 
-            MainWindow mainWindow,
+            Register packageRegister, 
+            MainWindowOld mainWindow,
             RegistredDataConfigWindow registerDataConfigWindow,
             MakeConsumptionPackageWindow makeConsumptionPackageWindow
             )
@@ -24,10 +24,10 @@ namespace CountersAnalysis
             _makeConsumptionPackageWindow = makeConsumptionPackageWindow;
             _packageRegister = packageRegister;
 
-            foreach (RegistredPackageData registerData in _packageRegister.registerData)
-            {
-                _mainWindow.displayRegistredData(registerData);
-            }            
+            //foreach (RegisterElementData registerData in _packageRegister.registerData)
+            //{
+            //    _mainWindow.displayRegistredData(registerData);
+            //}            
 
             Application.quitting += onAppClose;
             _mainWindow.onAddNewPackageClick += importNewCountersPackageData;
@@ -44,8 +44,8 @@ namespace CountersAnalysis
             {
                 string path = choseFilePathDialog("Import new CountersPackage", targetExtension: "xml");
                 CountersPackage countersPackage = new CountersPackage(path);
-                _packageRegister.addPackage(countersPackage);
-                _mainWindow.displayRegistredData(_packageRegister.lastRegistredData);
+                //_packageRegister.addPackage(countersPackage);
+                //_mainWindow.displayRegistredData(_packageRegister.lastRegistredData);
             }
             catch (Exception exception)
             {
@@ -72,20 +72,20 @@ namespace CountersAnalysis
 
         private void showConfigWindow(int dataID)
         {
-            RegistredPackageData packageData = _packageRegister.getRegistredElement(dataID);
-            _configWindow.init(packageData);
+            //RegisterElementData packageData = _packageRegister.getRegistredElement(dataID);
+            //_configWindow.init(packageData);
             _configWindow.show();
         }
 
         private void deleteRegistredData(int dataID)
         {
-            _packageRegister.removeRegistred(dataID);
+            //_packageRegister.removeRegistred(dataID);
             _mainWindow.removeDataHolder(dataID);
         }
 
         private void showMakeConsumptionPackageWindow()
         {
-            _makeConsumptionPackageWindow.init(_packageRegister.registerData);
+            //_makeConsumptionPackageWindow.init(_packageRegister.registerData);
             _makeConsumptionPackageWindow.show();
         }
 
@@ -104,12 +104,12 @@ namespace CountersAnalysis
         {
             try
             {
-                RegistredPackageData packageData = _packageRegister.getRegistredElement(dataID);
-                string name = packageData.name;
-                string folderPath = EditorUtility.OpenFolderPanel("Export Package Data to folder", "", "");
-                string filePath = folderPath + "/" + name + ".csv";
-                CountersPackage package = new CountersPackage(packageData.path);
-                DataHandler.saveCSV(filePath, package.packageCSVstring);
+                //RegisterElementData packageData = _packageRegister.getRegistredElement(dataID);
+                //string name = packageData.name;
+                //string folderPath = EditorUtility.OpenFolderPanel("Export Package Data to folder", "", "");
+                //string filePath = folderPath + "/" + name + ".csv";
+                //CountersPackage package = new CountersPackage(packageData.path);
+                //DataHandler.saveCSV(filePath, package.packageCSVstring);
         }
             catch (Exception exception)
             {

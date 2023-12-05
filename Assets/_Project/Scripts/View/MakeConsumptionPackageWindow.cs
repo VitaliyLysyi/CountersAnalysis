@@ -22,7 +22,7 @@ namespace CountersAnalysis
             _acceptButton.onClick.AddListener(onAcceptButtonClickInvoke);
         }
 
-        public void init(List<RegistredPackageData> registredData)
+        public void init(List<RegisterElementData> registredData)
         {
             List<string> registredPackageNames = registredData
                 .Select(registredPackageData => registredPackageData.name)

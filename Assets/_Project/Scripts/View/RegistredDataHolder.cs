@@ -15,7 +15,7 @@ namespace CountersAnalysis
 
         public event Action<int> onConfigButtonClick;
 
-        public void init(RegistredPackageData registredData)
+        public void init(RegisterElementData registredData)
         {
             _dataID = registredData.registerID;
             _packageNameText.text = registredData.name;

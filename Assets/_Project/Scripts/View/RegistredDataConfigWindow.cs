@@ -31,15 +31,15 @@ namespace CountersAnalysis
             _exportToExcelButton.onClick.AddListener(onExportClickInvoke);
         }
 
-        public void init(RegistredPackageData packageData)
+        public void init(RegisterElementData packageData)
         {
             _dataID = packageData.registerID;
             _packageNameText.text = packageData.name;
             _noteText.text = packageData.note;
             _dateText.text = packageData.date.ToString();
             _packageTypeText.text = packageData.packageType;
-            _headCounterText.text = packageData.headCounterNumber;
-            _counterCountText.text = packageData.countersCount.ToString();
+            //_headCounterText.text = packageData.headCounterNumber;
+            //_counterCountText.text = packageData.countersCount.ToString();
         }
 
         private void onDeleteClickInvoke()
