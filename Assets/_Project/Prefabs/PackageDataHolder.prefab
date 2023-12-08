@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 5299218204396431009}
   - component: {fileID: 4809625819044204330}
   - component: {fileID: 9028766407161237342}
+  - component: {fileID: 8341435629771206803}
   m_Layer: 5
-  m_Name: RegistredDataHolder
+  m_Name: PackageDataHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,9 +95,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _configButton: {fileID: 2796835313362690916}
-  _packageNameText: {fileID: 1841782184854292106}
+  _nameText: {fileID: 1841782184854292106}
   _noteText: {fileID: 9098433414929188815}
   _dateText: {fileID: 3979157365171963876}
+--- !u!114 &8341435629771206803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852423815752900087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 150
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &3122162462360250305
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,7 +767,7 @@ GameObject:
   - component: {fileID: 3831547300425957882}
   - component: {fileID: 2796835313362690916}
   m_Layer: 5
-  m_Name: ConfigButton
+  m_Name: DeleteButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -801,7 +822,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 582169a5232fa4243922f238fd051cdd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bb644cc64334323429f2de5f3fc25b31, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

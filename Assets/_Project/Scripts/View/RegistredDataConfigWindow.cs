@@ -37,7 +37,7 @@ namespace CountersAnalysis
             _packageNameText.text = packageData.name;
             _noteText.text = packageData.note;
             _dateText.text = packageData.date.ToString();
-            _packageTypeText.text = packageData.packageType;
+            _packageTypeText.text = packageData.elementType;
             //_headCounterText.text = packageData.headCounterNumber;
             //_counterCountText.text = packageData.countersCount.ToString();
         }

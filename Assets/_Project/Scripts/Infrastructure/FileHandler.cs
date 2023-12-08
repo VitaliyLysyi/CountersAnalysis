@@ -6,44 +6,13 @@ using UnityEngine;
 
 namespace CountersAnalysis
 {
-    public static class DataHandler
+    public static class FileHandler
     {
         //C:/Users/VITALIY/AppData/LocalLow/DefaultCompany/CountersAnalysis/
         private static readonly string _dataPath = Application.persistentDataPath + "/";
 
-        public static void save<T>(T data, string dataName) where T : class
+        public static void writeXML<T>(T data, string filePath) where T : struct
         {
-            string json = JsonUtility.ToJson(data, true);
-            string filePath = _dataPath + dataName;
-
-            try
-            {
-                File.WriteAllText(filePath, json);
-            }
-            catch (System.Exception exception)
-            {
-                Debug.Log("Saving error: " + exception.Message);
-            }
-        }
-
-        public static T load<T>(string dataName) where T : class
-        {
-            string filePath = _dataPath + dataName;
-            //Debug.Log("Data Handler: " + filePath);
-
-            if (File.Exists(filePath))
-            {
-                string json = File.ReadAllText(filePath);
-                return JsonUtility.FromJson<T>(json);
-            }
-
-            return null;
-        }
-
-        public static void saveXML<T>(T data, string filePath) where T : struct
-        {
-            //Debug.Log("Data Handler: " + filePath);
-
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             StreamWriter streamWriter = new StreamWriter(filePath);
 
@@ -59,10 +28,8 @@ namespace CountersAnalysis
             streamWriter.Close();
         }
 
-        public static T loadXML<T>(string filePath) where T : struct
+        public static T readXML<T>(string filePath) where T : struct
         {
-            //Debug.Log("Data Handler: " + filePath);
-
             if (File.Exists(filePath))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -73,7 +40,7 @@ namespace CountersAnalysis
                 return data;
             }
 
-            Debug.Log("Data Handler: " + "Loading error - file not found!");
+            Debug.LogWarning("File Handler: Loading error - file not found!");
             return default;
         }
 
@@ -94,7 +61,7 @@ namespace CountersAnalysis
                 return;
             }
 
-            Debug.Log("Data Handler: " + "File not deleted - file not found!");
+            Debug.Log("File Handler: " + "File not deleted - file not found!");
         }
 
         public static void saveCSV(string filePath, List<string> stringList)

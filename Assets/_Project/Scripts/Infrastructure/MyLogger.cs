@@ -4,24 +4,34 @@ namespace CountersAnalysis
 {
     public static class MyLogger
     {
-        public static void LogPackage(CountersPackageData package)
+        public static void logRegisterElementDeployed(RegisterElementData registerElement)
+        {
+            Debug.Log("===REGISTER ELEMENT " + registerElement.name + "===");
+            Debug.Log("===ID " + registerElement.registerID + "===");
+            Debug.Log("Path = " + registerElement.path);
+            Debug.Log("Date = " + registerElement.date);
+            Debug.Log("Data Type = " + registerElement.elementType);
+            Debug.Log("Note = " + registerElement.note);
+        }
+
+        public static void logPackageDeployed(CountersPackageData package)
         {
             Debug.Log("===PACKAGE " +  package + "===");
             Debug.Log("===DATE " + package.date + "===");
             Debug.Log("Note = " + package.note);
             Debug.Log("Head Counter:");
-            LogCounter(package.headCounter);
+            logCounterDeployed(package.headCounter);
             if (package.counters != null)
             {
                 Debug.Log("Counters Count = " + package.counters.Count + " ===>");
                 foreach (CounterData counter in package.counters)
                 {
-                    LogCounter(counter);
+                    logCounterDeployed(counter);
                 }
             }
         }
 
-        public static void LogCounter(CounterData counter, int spacing = 20)
+        public static void logCounterDeployed(CounterData counter, int spacing = 20)
         {
             string spacingString = new string('=', spacing);
             Debug.Log(spacingString);
@@ -33,12 +43,12 @@ namespace CountersAnalysis
             {
                 foreach (CounterScaleData scale in counter.scales)
                 {
-                    LogScale(scale);
+                    logScaleDeployed(scale);
                 }
             }
         }
 
-        public static void LogScale(CounterScaleData scale, int spacing = 5)
+        public static void logScaleDeployed(CounterScaleData scale, int spacing = 5)
         {
             string spacingString = new string('.', spacing); 
             Debug.Log(spacingString 
