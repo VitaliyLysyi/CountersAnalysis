@@ -5,6 +5,7 @@ namespace CountersAnalysis
     public class StartPoint : MonoBehaviour
     {
         [SerializeField] private CounterPackageTab _counterPackagaTab;
+        [SerializeField] private CalculationPatternsTab _calculationPatternsTab;
         private Presenter _presenter;
         private Register _dataRegister;
 
@@ -15,7 +16,8 @@ namespace CountersAnalysis
             _presenter = new Presenter();
             _presenter.init(
                 _dataRegister,
-                _counterPackagaTab
+                _counterPackagaTab,
+                _calculationPatternsTab
                 );
         }
     }

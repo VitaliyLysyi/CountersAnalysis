@@ -29,10 +29,10 @@ namespace CountersAnalysis
 
         public void add(RegisterElementData data)
         {
-            if (nameSimilarityCheck(data))
-            {
-                throw new Exception("Елемент з такою назвою вже завантажено в програму");
-            }
+            //if (nameSimilarityCheck(data))
+            //{
+            //    throw new Exception("Елемент з такою назвою вже завантажено в програму");
+            //}
 
             data.registerID = ++_registerData.lastID;
             _registerData.registerElements.Add(data);
@@ -72,6 +72,6 @@ namespace CountersAnalysis
 
         public List<RegisterElementData> getAll() => _registerData.registerElements;
 
-        public RegisterElementData getLast() => _registerData.registerElements.Last();
+        public RegisterElementData getLast() => _registerData.registerElements.LastOrDefault();
     }
 }

@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _counterPackagaTab: {fileID: 518033631}
+  _calculationPatternsTab: {fileID: 857098101}
 --- !u!1001 &518033629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -325,6 +326,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1456915736710766488, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456915736710766488, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456915736710766488, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456915736710766488, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1538645073087431652, guid: c201cbf53282e2d48bd04157171fe2c4,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -355,6 +376,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1568535815684838577, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568535815684838577, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568535815684838577, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1568535815684838577, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1571693257024076213, guid: c201cbf53282e2d48bd04157171fe2c4,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -381,6 +422,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1571693257024076213, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600915487867712400, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600915487867712400, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600915487867712400, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600915487867712400, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600915487867712400, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600915487867712400, guid: c201cbf53282e2d48bd04157171fe2c4,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -950,6 +1021,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5937292927498554267, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6093299272623291975, guid: c201cbf53282e2d48bd04157171fe2c4,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1181,6 +1257,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7532560896312457798, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634472004830722934, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634472004830722934, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634472004830722934, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634472004830722934, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634472004830722934, guid: c201cbf53282e2d48bd04157171fe2c4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634472004830722934, guid: c201cbf53282e2d48bd04157171fe2c4,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -1612,6 +1718,18 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!114 &857098101 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4904318484777210405, guid: c201cbf53282e2d48bd04157171fe2c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 518033629}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ede2ea8bbf29754883146ebd1e1cfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1090954716
 GameObject:
   m_ObjectHideFlags: 0

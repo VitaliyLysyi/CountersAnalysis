@@ -6,11 +6,13 @@ namespace CountersAnalysis
     public class Presenter
     {
         private CounterPackageTab _counterPackageTab;
+        private CalculationPatternsTab _calculationPatternsTab;
         private Register _dataRegister;
 
         public void init(
             Register dataRegister,
-            CounterPackageTab counterPackageTab
+            CounterPackageTab counterPackageTab,
+            CalculationPatternsTab calculationPatternsTab
             )
         {
             _dataRegister = dataRegister;
@@ -18,6 +20,9 @@ namespace CountersAnalysis
 
             _counterPackageTab = counterPackageTab;
             initCounterPackageTab();
+
+            _calculationPatternsTab = calculationPatternsTab;
+            //initCalculationPackageTab();
 
             eventSubscribe();
         }
@@ -28,7 +33,16 @@ namespace CountersAnalysis
 
             foreach (RegisterElementData element in _dataRegister.getAll())
             {
-                _counterPackageTab.add(element);
+                _counterPackageTab.showData(element);
+            }
+        }
+
+        private void initCalculationPackageTab()
+        {
+            _calculationPatternsTab.init();
+            foreach (RegisterElementData element in _dataRegister.getAll())
+            {
+                _calculationPatternsTab.showData(element);
             }
         }
 
@@ -41,7 +55,7 @@ namespace CountersAnalysis
                 RegisterElementData registerElementData = DataHandler.getRegisterElementData(countersPackage);
 
                 _dataRegister.add(registerElementData);
-                _counterPackageTab.add(_dataRegister.getLast());
+                _counterPackageTab.showData(_dataRegister.getLast());
             }
             catch (Exception exception)
             {
@@ -54,6 +68,7 @@ namespace CountersAnalysis
             Application.quitting += eventUnsubscribe;
 
             _counterPackageTab.onAddPackageClick += importCounterPackage;
+            _counterPackageTab.onRemovePackageClick += _dataRegister.remove;
         }
 
         private void eventUnsubscribe()
@@ -61,6 +76,7 @@ namespace CountersAnalysis
             Application.quitting -= eventUnsubscribe;
 
             _counterPackageTab.onAddPackageClick -= importCounterPackage;
+            _counterPackageTab.onRemovePackageClick -= _dataRegister.remove;
         }
     }
 }
