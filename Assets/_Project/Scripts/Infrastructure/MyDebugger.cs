@@ -1,9 +1,24 @@
+using System.Linq;
 using UnityEngine;
 
 namespace CountersAnalysis
 {
-    public static class MyLogger
+    public static class MyDebugger
     {
+        private static System.Random random = new System.Random();
+
+        public static string randomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public static void log(string message)
+        {
+            Debug.Log(message);
+        }
+
         public static void logRegisterElementDeployed(RegisterElementData registerElement)
         {
             Debug.Log("===REGISTER ELEMENT " + registerElement.name + "===");

@@ -7,43 +7,27 @@ namespace CountersAnalysis
     {
         private CounterPackageTab _counterPackageTab;
         private CalculationPatternsTab _calculationPatternsTab;
+        private DataHandler _dataHandler;
         private Register _dataRegister;
 
         public void init(
-            Register dataRegister,
             CounterPackageTab counterPackageTab,
             CalculationPatternsTab calculationPatternsTab
             )
         {
-            _dataRegister = dataRegister;
+            _dataRegister = new Register();
+            _dataHandler = new DataHandler();
+            _counterPackageTab = counterPackageTab;
+            _calculationPatternsTab = calculationPatternsTab;
+            eventsSubscribe();
+        }
+
+        public void start()
+        {
             _dataRegister.load();
 
-            _counterPackageTab = counterPackageTab;
-            initCounterPackageTab();
-
-            _calculationPatternsTab = calculationPatternsTab;
-            //initCalculationPackageTab();
-
-            eventSubscribe();
-        }
-
-        private void initCounterPackageTab()
-        {
-            _counterPackageTab.init();
-
-            foreach (RegisterElementData element in _dataRegister.getAll())
-            {
-                _counterPackageTab.showData(element);
-            }
-        }
-
-        private void initCalculationPackageTab()
-        {
-            _calculationPatternsTab.init();
-            foreach (RegisterElementData element in _dataRegister.getAll())
-            {
-                _calculationPatternsTab.showData(element);
-            }
+            _counterPackageTab.show(_dataRegister.getAllByType(RegistredDataType.CountersPackage));
+            _calculationPatternsTab.show(_dataRegister.getAllByType(RegistredDataType.CalculationPattern));
         }
 
         private void importCounterPackage()
@@ -51,11 +35,9 @@ namespace CountersAnalysis
             try
             {
                 string path = DialogService.choseFile("Import new CountersPackage", "", "xml");
-                CountersPackage countersPackage = DataHandler.getPackage(path);
-                RegisterElementData registerElementData = DataHandler.getRegisterElementData(countersPackage);
-
-                _dataRegister.add(registerElementData);
-                _counterPackageTab.showData(_dataRegister.getLast());
+                CountersPackage countersPackage = _dataHandler.importPackage(path);
+                _dataRegister.add(countersPackage);
+                _counterPackageTab.show(countersPackage.getRegistrableData());
             }
             catch (Exception exception)
             {
@@ -63,20 +45,50 @@ namespace CountersAnalysis
             }
         }
 
-        private void eventSubscribe()
+        private void addNewCalculationPattern()
         {
-            Application.quitting += eventUnsubscribe;
+            try
+            {
+                string path = DialogService.saveFile("Name", "Enter File Name", Constants.DEFAULT_DATA_PATH, "xml");
+                CalculationPattern calculationPattern = _dataHandler.createCalculationPattern(path);
+                _dataRegister.add(calculationPattern);
+                _calculationPatternsTab.show(_dataRegister.getLast());
+            }
+            catch (Exception exception)
+            {
+                DialogService.showMessage("Saving failed:", exception.Message);
+            }
+        }
+
+        private void addCountersToPattern(int id)
+        {
+            MyDebugger.logRegisterElementDeployed(_dataRegister.getElement(id));
+        }
+
+        private void eventsSubscribe()
+        {
+            Application.quitting += eventsUnsubscribe;
+            Application.quitting += _dataRegister.saveData;
 
             _counterPackageTab.onAddPackageClick += importCounterPackage;
             _counterPackageTab.onRemovePackageClick += _dataRegister.remove;
+
+            _calculationPatternsTab.onAddPatternClick += addNewCalculationPattern;
+            _calculationPatternsTab.onAddToPatternClick += addCountersToPattern;
+            _calculationPatternsTab.onRemovePatternClick += _dataRegister.remove;
         }
 
-        private void eventUnsubscribe()
+        private void eventsUnsubscribe()
         {
-            Application.quitting -= eventUnsubscribe;
+            Application.quitting -= eventsUnsubscribe;
+            Application.quitting -= _dataRegister.saveData;
 
             _counterPackageTab.onAddPackageClick -= importCounterPackage;
             _counterPackageTab.onRemovePackageClick -= _dataRegister.remove;
+
+            _calculationPatternsTab.onAddPatternClick -= addNewCalculationPattern;
+            _calculationPatternsTab.onAddToPatternClick -= addCountersToPattern;
+            _calculationPatternsTab.onRemovePatternClick -= _dataRegister.remove;
         }
     }
 }

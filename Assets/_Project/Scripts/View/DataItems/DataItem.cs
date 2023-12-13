@@ -26,5 +26,10 @@ namespace CountersAnalysis
         public void deselect() => _backgroundImage.color = _backgroundColor;
 
         public int id => _id;
+
+        private void OnDestroy()
+        {
+            onClicked = null;
+        }
     }
 }

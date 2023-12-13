@@ -2,20 +2,20 @@ using System.IO;
 
 namespace CountersAnalysis
 {
-    public class CountersPackage : IRegistrable
+    public class CalculationPattern : IRegistrable
     {
         private RegisterElementData _registrableData;
-        private CountersPackageData _packageData;
+        private CalculationPatternData _calculationPatternData;
 
-        public CountersPackage() { }
+        public CalculationPattern() { }
 
-        public CountersPackage(CountersPackageData packageData, string path)
+        public CalculationPattern(CalculationPatternData calculationPatternData, string path)
         {
-            _packageData = packageData;
+            _calculationPatternData = calculationPatternData;
 
             _registrableData.path = path;
             _registrableData.name = Path.GetFileNameWithoutExtension(path);
-            _registrableData.elementType = RegistredDataType.CountersPackage.ToString();
+            _registrableData.elementType = RegistredDataType.CalculationPattern.ToString();
         }
 
         public RegisterElementData getRegistrableData()

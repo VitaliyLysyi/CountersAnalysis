@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,30 +10,51 @@ namespace CountersAnalysis
         [SerializeField] private PatternDataItem _dataItemPrefab;
         [SerializeField] private DataItemHolder _itemHolder;
         [SerializeField] private Button _addPatternButton;
+        [SerializeField] private Button _addToPatternButton;
+        [SerializeField] private Button _removePatternButton;
 
         public event Action onAddPatternClick;
         public event Action<int> onRemovePatternClick;
+        public event Action<int> onAddToPatternClick;
 
         public void init()
         {
             _itemHolder.init(_dataItemPrefab);
+
             _addPatternButton.onClick.AddListener(() => onAddPatternClick?.Invoke());
+            _addToPatternButton.onClick.AddListener(() => onAddToPatternClick?.Invoke(_itemHolder.selected.id));
+            _removePatternButton.onClick.AddListener(removeData);
         }
 
-        public void showData(RegisterElementData registerElementData)
+        public void show(RegisterElementData registerElementData)
         {
             _itemHolder.create(registerElementData);
         }
 
-        private void removeData(int id)
+        public void show(List<RegisterElementData> dataList)
         {
-            _itemHolder.remove(id);
-            onRemovePatternClick?.Invoke(id);
+            foreach(RegisterElementData data in dataList)
+            {
+                show(data);
+            }
+        }
+
+        private void removeData()
+        {
+            if (_itemHolder.selected == null)
+                return;
+
+            onRemovePatternClick?.Invoke(_itemHolder.selected.id);
+            _itemHolder.removeSelected();
         }
 
         private void OnDestroy()
         {
             _addPatternButton.onClick.RemoveAllListeners();
+            _addToPatternButton.onClick.RemoveAllListeners();
+            _removePatternButton.onClick.RemoveAllListeners();
+            onAddPatternClick = null;
+            onAddToPatternClick = null;
             onRemovePatternClick = null;
         }
     }

@@ -6,72 +6,77 @@ namespace CountersAnalysis
 {
     public class Register
     {
-        private RegisterData _registerData;
+        private List<RegisterElementData> _data;
+        private int _lastID;
 
         public void load()
         {
             string path = Constants.DEFAULT_REGISTER_FILE_PATH;
-            _registerData = FileHandler.readXML<RegisterData>(path);
+            RegisterData registerData = FileHandler.readXML<RegisterData>(path);
+            _data = registerData.registerElements;
+            _lastID = registerData.lastID;
+            dataAvilabilityCheck();
+        }
 
-            bool registerDataNotExist = _registerData.Equals(default(RegisterData));
-            if (registerDataNotExist)
+        private void dataAvilabilityCheck()
+        {
+            if (_data == null)
             {
-                create();
-            }
-        }
-
-        private void create()
-        {
-            _registerData = new RegisterData();
-            _registerData.registerElements = new List<RegisterElementData>();
-            save();
-        }
-
-        public void add(RegisterElementData data)
-        {
-            //if (nameSimilarityCheck(data))
-            //{
-            //    throw new Exception("Елемент з такою назвою вже завантажено в програму");
-            //}
-
-            data.registerID = ++_registerData.lastID;
-            _registerData.registerElements.Add(data);
-            save();
-        }
-
-        private bool nameSimilarityCheck(RegisterElementData data)
-        {
-            return _registerData.registerElements.Any(registredData => registredData.name == data.name);
-        }
-
-        public void save()
-        {
-            FileHandler.writeXML(_registerData, Constants.DEFAULT_REGISTER_FILE_PATH);
-        }
-
-        public void remove(RegisterElementData data) => remove(data.registerID);
-
-        public void remove(int id)
-        {
-            RegisterElementData data = find(id);
-            if (data.Equals(default))
-            {
+                _data = new List<RegisterElementData>();
                 return;
             }
 
-            _registerData.registerElements.Remove(data);
-            save();
+            _data = _data.Where(data => FileHandler.fileExist(data.path)).ToList();
         }
 
-        public RegisterElementData find(RegisterElementData data) => find(data.registerID);
-
-        public RegisterElementData find(int id)
+        public void add(IRegistrable registarble)
         {
-            return _registerData.registerElements.FirstOrDefault(data => data.registerID == id);
+            RegisterElementData registrableData = registarble.getRegistrableData();
+            registrableData.registerID = ++_lastID;
+            dataExistCheck(registrableData.path);
+            registarble.updateRegistrableData(registrableData);
+            _data.Add(registrableData);
         }
 
-        public List<RegisterElementData> getAll() => _registerData.registerElements;
+        private void dataExistCheck(string path)
+        {
+            RegisterElementData existingData = getElement(path);
+            if (existingData.path == path)
+                throw new Exception("Файл з таким шляхом уже завантажувався в програму");
+        }
 
-        public RegisterElementData getLast() => _registerData.registerElements.LastOrDefault();
+        public void saveData()
+        {
+            RegisterData registerData = new RegisterData();
+            registerData.lastID = _lastID;
+            registerData.registerElements = _data;
+            FileHandler.writeXML(registerData, Constants.DEFAULT_REGISTER_FILE_PATH);
+        }
+
+        public void remove(int id)
+        {
+            RegisterElementData data = getElement(id);
+            if (data.Equals(default))
+                return;
+
+            _data.Remove(data);
+        }
+
+        public RegisterElementData getElement(string path)
+        {
+            return _data.FirstOrDefault(data => data.path == path);
+        }
+
+        public RegisterElementData getElement(int id)
+        {
+            return _data.FirstOrDefault(data => data.registerID == id);
+        }
+
+        public List<RegisterElementData> getAllByType(RegistredDataType dataType)
+        {
+            return _data.Where(data => data.elementType == dataType.ToString()).ToList();
+        }
+
+        public RegisterElementData getLast() => _data.LastOrDefault();
     }
 }

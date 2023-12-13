@@ -24,12 +24,15 @@ namespace CountersAnalysis
             return item;
         }
 
-        public void remove(int id)
+        public void removeSelected()
         {
-            DataItem item = get(id);
-            item.onClicked -= select;
-            _items.Remove(item);
-            Destroy(item);
+            if (_currentSelected == null) 
+                return;
+
+            _currentSelected.onClicked -= select;
+            _items.Remove(_currentSelected);
+            Destroy(_currentSelected.gameObject);
+            _currentSelected = null;
         }
 
         private void select(int id)

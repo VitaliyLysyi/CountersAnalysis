@@ -10,17 +10,21 @@ namespace CountersAnalysis
         {
             string path = EditorUtility.OpenFilePanel(title, directory, targetExtension);
             if (targetExtension == "")
-            {
                 return path;
-            }
-
-            string fileExtension = Path.GetExtension(path);
-            if (fileExtension == ("." + targetExtension))
-            {
+            
+            if (Path.GetExtension(path) == ("." + targetExtension))
                 return path;
-            }
-
+            
             throw new Exception("Wrong file path or extension");
+        }
+
+        public static string saveFile(string name = "", string title = "Enter File Name", string directory = "", string targetExtension = "")
+        {
+            string path = EditorUtility.SaveFilePanel(title, directory, name, targetExtension);
+            if (Path.GetFileNameWithoutExtension(path) != "")
+                return path;
+
+            throw new Exception("Wrong file name or extension");
         }
 
         public static void showMessage(string title, string message, string buttonText = "OK")

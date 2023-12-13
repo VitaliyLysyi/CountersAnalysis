@@ -6,19 +6,19 @@ namespace CountersAnalysis
     {
         [SerializeField] private CounterPackageTab _counterPackagaTab;
         [SerializeField] private CalculationPatternsTab _calculationPatternsTab;
-        private Presenter _presenter;
-        private Register _dataRegister;
 
         private void Start()
         {
-            _dataRegister = new Register();
+            _counterPackagaTab.init();
+            _calculationPatternsTab.init();
 
-            _presenter = new Presenter();
-            _presenter.init(
-                _dataRegister,
+            Presenter presenter = new Presenter();
+            presenter.init(
                 _counterPackagaTab,
                 _calculationPatternsTab
                 );
+
+            presenter.start();
         }
     }
 }
