@@ -11,7 +11,7 @@ namespace CountersAnalysis
         private class ButtonTabPair
         {
             public Button button;
-            public ContentPanel content;
+            public ContentWindow content;
         }
 
         [SerializeField] private List<ButtonTabPair> _tabs;

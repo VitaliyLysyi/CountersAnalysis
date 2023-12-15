@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace CountersAnalysis
 {
-    public class MakeConsumptionPackageWindow : ContentPanel
+    public class MakeConsumptionPackageWindow : ContentWindow
     {
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _acceptButton;

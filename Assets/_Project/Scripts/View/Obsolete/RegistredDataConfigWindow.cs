@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace CountersAnalysis
 {
-    public class RegistredDataConfigWindow : ContentPanel
+    public class RegistredDataConfigWindow : ContentWindow
     {
         [Header("Text Fields")]
         [SerializeField] private TextMeshProUGUI _packageNameText;

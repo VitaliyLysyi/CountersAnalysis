@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace CountersAnalysis
 {
-    public class CounterPackageTab : ContentPanel
+    public class CounterPackageTab : ContentWindow
     {
         [SerializeField] private PackageDataItem _dataItemPrefab;
         [SerializeField] private DataItemHolder _itemHolder;
@@ -23,16 +23,16 @@ namespace CountersAnalysis
             _deletePackageButton.onClick.AddListener(removeData);
         }
 
-        public void show(RegisterElementData registerElementData)
+        public void showData(RegisterElementData registerElementData)
         {
             _itemHolder.create(registerElementData);
         }
 
-        public void show(List<RegisterElementData> dataList)
+        public void showData(List<RegisterElementData> dataList)
         {
             foreach (RegisterElementData data in dataList)
             {
-                show(data);
+                showData(data);
             }
         }
 

@@ -7,18 +7,21 @@ namespace CountersAnalysis
     {
         private CounterPackageTab _counterPackageTab;
         private CalculationPatternsTab _calculationPatternsTab;
+        private InputFieldWindow _inputFieldWindow;
         private DataHandler _dataHandler;
         private Register _dataRegister;
 
         public void init(
             CounterPackageTab counterPackageTab,
-            CalculationPatternsTab calculationPatternsTab
+            CalculationPatternsTab calculationPatternsTab,
+            InputFieldWindow inputFieldWindow
             )
         {
             _dataRegister = new Register();
             _dataHandler = new DataHandler();
             _counterPackageTab = counterPackageTab;
             _calculationPatternsTab = calculationPatternsTab;
+            _inputFieldWindow = inputFieldWindow;
             eventsSubscribe();
         }
 
@@ -26,8 +29,8 @@ namespace CountersAnalysis
         {
             _dataRegister.load();
 
-            _counterPackageTab.show(_dataRegister.getAllByType(RegistredDataType.CountersPackage));
-            _calculationPatternsTab.show(_dataRegister.getAllByType(RegistredDataType.CalculationPattern));
+            _counterPackageTab.showData(_dataRegister.getAllByType(RegistredDataType.CountersPackage));
+            _calculationPatternsTab.showData(_dataRegister.getAllByType(RegistredDataType.CalculationPattern));
         }
 
         private void importCounterPackage()
@@ -37,7 +40,7 @@ namespace CountersAnalysis
                 string path = DialogService.choseFile("Import new CountersPackage", "", "xml");
                 CountersPackage countersPackage = _dataHandler.importPackage(path);
                 _dataRegister.add(countersPackage);
-                _counterPackageTab.show(countersPackage.getRegistrableData());
+                _counterPackageTab.showData(countersPackage.getRegistrableData());
             }
             catch (Exception exception)
             {
@@ -52,7 +55,7 @@ namespace CountersAnalysis
                 string path = DialogService.saveFile("Name", "Enter File Name", Constants.DEFAULT_DATA_PATH, "xml");
                 CalculationPattern calculationPattern = _dataHandler.createCalculationPattern(path);
                 _dataRegister.add(calculationPattern);
-                _calculationPatternsTab.show(_dataRegister.getLast());
+                _calculationPatternsTab.showData(_dataRegister.getLast());
             }
             catch (Exception exception)
             {
@@ -62,7 +65,12 @@ namespace CountersAnalysis
 
         private void addCountersToPattern(int id)
         {
-            MyDebugger.logRegisterElementDeployed(_dataRegister.getElement(id));
+            _inputFieldWindow.show(id.ToString(), "Enter Text Here", windowTest, () => MyDebugger.log("Canceled"));
+        }
+
+        private void windowTest(string text)
+        {
+            MyDebugger.log(text);
         }
 
         private void eventsSubscribe()
