@@ -15,7 +15,7 @@ namespace CountersAnalysis
             _itemPrefab = dataItemPrefab;
         }
 
-        public DataItem create(RegisterElementData registerElementData)
+        public DataItem create(RegistrableData registerElementData)
         {
             DataItem item = Instantiate(_itemPrefab, transform);
             item.init(registerElementData);

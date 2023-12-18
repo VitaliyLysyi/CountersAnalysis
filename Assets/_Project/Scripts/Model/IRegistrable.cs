@@ -2,8 +2,8 @@ namespace CountersAnalysis
 {
     public interface IRegistrable
     {
-        public RegisterElementData getRegistrableData();
+        public RegistrableData getRegistrableData();
 
-        public void updateRegistrableData(RegisterElementData registrableData);
+        public void updateRegistrableData(RegistrableData registrableData);
     }
 }

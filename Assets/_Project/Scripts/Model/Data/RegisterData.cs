@@ -12,6 +12,6 @@ namespace CountersAnalysis
         public int lastID;
 
         [XmlElement("RegisterElement")]
-        public List<RegisterElementData> registerElements;
+        public List<RegistrableData> registerElements;
     }
 }

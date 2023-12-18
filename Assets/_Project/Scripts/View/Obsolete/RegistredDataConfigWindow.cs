@@ -31,7 +31,7 @@ namespace CountersAnalysis
             _exportToExcelButton.onClick.AddListener(onExportClickInvoke);
         }
 
-        public void init(RegisterElementData packageData)
+        public void init(RegistrableData packageData)
         {
             _dataID = packageData.registerID;
             _packageNameText.text = packageData.name;

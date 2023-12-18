@@ -6,7 +6,7 @@ namespace CountersAnalysis
 {
     public class Register
     {
-        private List<RegisterElementData> _data;
+        private List<RegistrableData> _data;
         private int _lastID;
 
         public void load()
@@ -22,7 +22,7 @@ namespace CountersAnalysis
         {
             if (_data == null)
             {
-                _data = new List<RegisterElementData>();
+                _data = new List<RegistrableData>();
                 return;
             }
 
@@ -31,7 +31,7 @@ namespace CountersAnalysis
 
         public void add(IRegistrable registarble)
         {
-            RegisterElementData registrableData = registarble.getRegistrableData();
+            RegistrableData registrableData = registarble.getRegistrableData();
             registrableData.registerID = ++_lastID;
             dataExistCheck(registrableData.path);
             registarble.updateRegistrableData(registrableData);
@@ -40,7 +40,7 @@ namespace CountersAnalysis
 
         private void dataExistCheck(string path)
         {
-            RegisterElementData existingData = getElement(path);
+            RegistrableData existingData = getData(path);
             if (existingData.path == path)
                 throw new Exception("Файл з таким шляхом уже завантажувався в програму");
         }
@@ -55,28 +55,28 @@ namespace CountersAnalysis
 
         public void remove(int id)
         {
-            RegisterElementData data = getElement(id);
+            RegistrableData data = getData(id);
             if (data.Equals(default))
                 return;
 
             _data.Remove(data);
         }
 
-        public RegisterElementData getElement(string path)
+        public RegistrableData getData(string path)
         {
             return _data.FirstOrDefault(data => data.path == path);
         }
 
-        public RegisterElementData getElement(int id)
+        public RegistrableData getData(int id)
         {
             return _data.FirstOrDefault(data => data.registerID == id);
         }
 
-        public List<RegisterElementData> getAllByType(RegistredDataType dataType)
+        public List<RegistrableData> getAllByType(RegistredDataType dataType)
         {
             return _data.Where(data => data.elementType == dataType.ToString()).ToList();
         }
 
-        public RegisterElementData getLast() => _data.LastOrDefault();
+        public RegistrableData getLast() => _data.LastOrDefault();
     }
 }

@@ -8,7 +8,7 @@ namespace CountersAnalysis
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _noteText;
 
-        public override void init(RegisterElementData registerElement)
+        public override void init(RegistrableData registerElement)
         {
             _id = registerElement.registerID;
             _nameText.text = registerElement.name;

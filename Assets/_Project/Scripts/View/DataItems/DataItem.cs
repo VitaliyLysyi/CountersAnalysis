@@ -14,7 +14,7 @@ namespace CountersAnalysis
 
         public event Action<int> onClicked;
 
-        public virtual void init(RegisterElementData data) => _id = data.registerID;
+        public virtual void init(RegistrableData data) => _id = data.registerID;
 
         public void OnPointerClick(PointerEventData eventData)
         {

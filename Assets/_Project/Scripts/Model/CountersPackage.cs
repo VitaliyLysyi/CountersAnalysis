@@ -4,7 +4,7 @@ namespace CountersAnalysis
 {
     public class CountersPackage : IRegistrable
     {
-        private RegisterElementData _registrableData;
+        private RegistrableData _registrableData;
         private CountersPackageData _packageData;
 
         public CountersPackage() { }
@@ -18,12 +18,12 @@ namespace CountersAnalysis
             _registrableData.elementType = RegistredDataType.CountersPackage.ToString();
         }
 
-        public RegisterElementData getRegistrableData()
+        public RegistrableData getRegistrableData()
         {
             return _registrableData;
         }
 
-        public void updateRegistrableData(RegisterElementData registrableData)
+        public void updateRegistrableData(RegistrableData registrableData)
         {
             _registrableData = registrableData;
         }

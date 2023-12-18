@@ -12,36 +12,38 @@ namespace CountersAnalysis
         [SerializeField] private Button _addPackageButton;
         [SerializeField] private Button _deletePackageButton;
 
-        public event Action onAddPackageClick;
-        public event Action<int> onRemovePackageClick;
+        public event Action onAddClick;
+        public event Action<int> onRemoveClick;
 
         public void init()
         {
             _itemHolder.init(_dataItemPrefab);
 
-            _addPackageButton.onClick.AddListener(() => onAddPackageClick?.Invoke());
+            _addPackageButton.onClick.AddListener(addClick);
             _deletePackageButton.onClick.AddListener(removeData);
         }
 
-        public void showData(RegisterElementData registerElementData)
+        public void showData(RegistrableData registerElementData)
         {
             _itemHolder.create(registerElementData);
         }
 
-        public void showData(List<RegisterElementData> dataList)
+        public void showData(List<RegistrableData> dataList)
         {
-            foreach (RegisterElementData data in dataList)
+            foreach (RegistrableData data in dataList)
             {
                 showData(data);
             }
         }
+
+        private void addClick() => onAddClick?.Invoke();
 
         private void removeData()
         {
             if (_itemHolder.selected == null)
                 return;
 
-            onRemovePackageClick?.Invoke(_itemHolder.selected.id);
+            onRemoveClick?.Invoke(_itemHolder.selected.id);
             _itemHolder.removeSelected();
         }
 
@@ -49,8 +51,8 @@ namespace CountersAnalysis
         {
             _addPackageButton.onClick.RemoveAllListeners();
             _deletePackageButton.onClick.RemoveAllListeners();
-            onRemovePackageClick = null;
-            onRemovePackageClick = null;
+            onRemoveClick = null;
+            onRemoveClick = null;
         }
     }
 }

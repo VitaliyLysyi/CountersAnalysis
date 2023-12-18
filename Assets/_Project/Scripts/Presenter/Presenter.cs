@@ -1,12 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CountersAnalysis
 {
     public class Presenter
     {
-        private CounterPackageTab _counterPackageTab;
-        private CalculationPatternsTab _calculationPatternsTab;
+        private CounterPackageTab _packagesUITab;
+        private CalculationPatternsTab _patternsUITab;
         private InputFieldWindow _inputFieldWindow;
         private DataHandler _dataHandler;
         private Register _dataRegister;
@@ -19,18 +20,46 @@ namespace CountersAnalysis
         {
             _dataRegister = new Register();
             _dataHandler = new DataHandler();
-            _counterPackageTab = counterPackageTab;
-            _calculationPatternsTab = calculationPatternsTab;
+            _packagesUITab = counterPackageTab;
+            _patternsUITab = calculationPatternsTab;
             _inputFieldWindow = inputFieldWindow;
             eventsSubscribe();
+        }
+
+        private void eventsSubscribe()
+        {
+            Application.quitting += eventsUnsubscribe;
+            Application.quitting += _dataRegister.saveData;
+
+            _packagesUITab.onAddClick += importCounterPackage;
+            _packagesUITab.onRemoveClick += _dataRegister.remove;
+
+            _patternsUITab.onAddClick += addNewCalculationPattern;
+            _patternsUITab.onAddToPatternClick += addToPatternClick;
+            _patternsUITab.onRemoveFromPatternClick += removeFromPatternClick;
+            _patternsUITab.onRemoveClick += _dataRegister.remove;
+        }
+
+        private void eventsUnsubscribe()
+        {
+            Application.quitting -= eventsUnsubscribe;
+            Application.quitting -= _dataRegister.saveData;
+
+            _packagesUITab.onAddClick -= importCounterPackage;
+            _packagesUITab.onRemoveClick -= _dataRegister.remove;
+
+            _patternsUITab.onAddClick -= addNewCalculationPattern;
+            _patternsUITab.onAddToPatternClick -= addToPatternClick;
+            _patternsUITab.onRemoveFromPatternClick -= removeFromPatternClick;
+            _patternsUITab.onRemoveClick -= _dataRegister.remove;
         }
 
         public void start()
         {
             _dataRegister.load();
 
-            _counterPackageTab.showData(_dataRegister.getAllByType(RegistredDataType.CountersPackage));
-            _calculationPatternsTab.showData(_dataRegister.getAllByType(RegistredDataType.CalculationPattern));
+            _packagesUITab.showData(_dataRegister.getAllByType(RegistredDataType.CountersPackage));
+            _patternsUITab.showData(_dataRegister.getAllByType(RegistredDataType.CalculationPattern));
         }
 
         private void importCounterPackage()
@@ -40,7 +69,7 @@ namespace CountersAnalysis
                 string path = DialogService.choseFile("Import new CountersPackage", "", "xml");
                 CountersPackage countersPackage = _dataHandler.importPackage(path);
                 _dataRegister.add(countersPackage);
-                _counterPackageTab.showData(countersPackage.getRegistrableData());
+                _packagesUITab.showData(countersPackage.getRegistrableData());
             }
             catch (Exception exception)
             {
@@ -55,7 +84,7 @@ namespace CountersAnalysis
                 string path = DialogService.saveFile("Name", "Enter File Name", Constants.DEFAULT_DATA_PATH, "xml");
                 CalculationPattern calculationPattern = _dataHandler.createCalculationPattern(path);
                 _dataRegister.add(calculationPattern);
-                _calculationPatternsTab.showData(_dataRegister.getLast());
+                _patternsUITab.showData(_dataRegister.getLast());
             }
             catch (Exception exception)
             {
@@ -63,40 +92,38 @@ namespace CountersAnalysis
             }
         }
 
-        private void addCountersToPattern(int id)
+        private void addToPatternClick(int id)
         {
-            _inputFieldWindow.show(id.ToString(), "Enter Text Here", windowTest, () => MyDebugger.log("Canceled"));
+            string title = "¬каж≥ть номери л≥чильник≥в";
+            _inputFieldWindow.show(title, "", inputString => addToPattern(inputString, id));
         }
 
-        private void windowTest(string text)
+        private void addToPattern(string text, int id)
         {
-            MyDebugger.log(text);
+            List<string> counterNumbers = _dataHandler.clearSplit(text);
+            List<CounterData> counterDatas = _dataHandler.createByNumbers(counterNumbers);
+
+            RegistrableData registrableData = _dataRegister.getData(id);
+            CalculationPattern pattern = _dataHandler.openPattern(registrableData);
+            pattern.addCounter(counterDatas);
+            _dataHandler.savePattern(pattern);
         }
 
-        private void eventsSubscribe()
+        private void removeFromPatternClick(int id)
         {
-            Application.quitting += eventsUnsubscribe;
-            Application.quitting += _dataRegister.saveData;
-
-            _counterPackageTab.onAddPackageClick += importCounterPackage;
-            _counterPackageTab.onRemovePackageClick += _dataRegister.remove;
-
-            _calculationPatternsTab.onAddPatternClick += addNewCalculationPattern;
-            _calculationPatternsTab.onAddToPatternClick += addCountersToPattern;
-            _calculationPatternsTab.onRemovePatternClick += _dataRegister.remove;
+            string title = "¬каж≥ть номери л≥чильник≥в";
+            _inputFieldWindow.show(title, "", inputString => removeFromPattern(inputString, id));
         }
 
-        private void eventsUnsubscribe()
+        private void removeFromPattern(string text, int id)
         {
-            Application.quitting -= eventsUnsubscribe;
-            Application.quitting -= _dataRegister.saveData;
+            List<string> counterNumbers = _dataHandler.clearSplit(text);
+            List<CounterData> counterDatas = _dataHandler.createByNumbers(counterNumbers);
 
-            _counterPackageTab.onAddPackageClick -= importCounterPackage;
-            _counterPackageTab.onRemovePackageClick -= _dataRegister.remove;
-
-            _calculationPatternsTab.onAddPatternClick -= addNewCalculationPattern;
-            _calculationPatternsTab.onAddToPatternClick -= addCountersToPattern;
-            _calculationPatternsTab.onRemovePatternClick -= _dataRegister.remove;
+            RegistrableData registrableData = _dataRegister.getData(id);
+            CalculationPattern pattern = _dataHandler.openPattern(registrableData);
+            pattern.removeCounter(counterDatas);
+            _dataHandler.savePattern(pattern);
         }
     }
 }

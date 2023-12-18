@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -14,12 +15,21 @@ namespace CountersAnalysis
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
+        public static void log<T>(List<T> strings)
+        {
+            Debug.Log("List of " + strings.GetType().ToString());
+            foreach (var s in strings)
+            {
+                Debug.Log(s);
+            }
+        }
+
         public static void log(string message)
         {
             Debug.Log(message);
         }
 
-        public static void logRegisterElementDeployed(RegisterElementData registerElement)
+        public static void logRegisterElementDeployed(RegistrableData registerElement)
         {
             Debug.Log("===REGISTER ELEMENT " + registerElement.name + "===");
             Debug.Log("===ID " + registerElement.registerID + "===");

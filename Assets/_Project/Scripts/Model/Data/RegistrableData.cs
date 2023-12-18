@@ -5,7 +5,7 @@ namespace CountersAnalysis
 {
     [Serializable]
     [XmlRoot("RegisterElement")]
-    public struct RegisterElementData
+    public struct RegistrableData
     {
         [XmlElement("RegisterID")]
         public int registerID;

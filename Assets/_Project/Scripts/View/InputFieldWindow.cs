@@ -12,22 +12,23 @@ namespace CountersAnalysis
         [SerializeField] private Button _confirmButton;
         [SerializeField] private Button _cancelButton;
 
-        public void show(string title, string input, Action<string> onConfirm, Action onCancel)
+        public void show(string title, string input, Action<string> onConfirm, Action onCancel = null, bool canEditText = true)
         {
             show();
             _titleText.text = title;
             _inputField.text = input;
+            _inputField.isRichTextEditingAllowed = canEditText;
 
             _confirmButton.onClick.AddListener(() =>
             {
                 hide();
-                onConfirm(_inputField.text);
+                onConfirm?.Invoke(_inputField.text);
             });
 
             _cancelButton.onClick.AddListener(() =>
             {
                 hide();
-                onCancel();
+                onCancel?.Invoke();
             });
         }
 

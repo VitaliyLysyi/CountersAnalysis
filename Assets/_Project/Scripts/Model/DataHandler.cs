@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace CountersAnalysis
 {
     public class DataHandler
@@ -12,6 +15,38 @@ namespace CountersAnalysis
             CalculationPatternData patternData = new CalculationPatternData();
             FileHandler.writeXML(patternData, path);
             return new CalculationPattern(patternData, path);
+        }
+
+        public CalculationPattern openPattern(RegistrableData registredData)
+        {
+            CalculationPatternData patternData = FileHandler.readXML<CalculationPatternData>(registredData.path);
+            CalculationPattern pattern = new CalculationPattern(patternData);
+            pattern.updateRegistrableData(registredData);
+            return pattern;
+        }
+
+        public void savePattern(CalculationPattern pattern)
+        {
+            RegistrableData registredData = pattern.getRegistrableData();
+            FileHandler.writeXML(pattern.patternData, registredData.path);
+        }
+
+        public List<CounterData> createByNumbers(List<string> numbers)
+        {
+            List<CounterData> counterDatas = new List<CounterData>();
+            foreach (string number in numbers)
+            {
+                CounterData counterData = new CounterData();
+                counterData.number = number;
+                counterDatas.Add(counterData);
+            }
+            return counterDatas;
+        }
+
+        public List<string> clearSplit(string text)
+        {
+            string replacedString = text.Replace("\r", "");
+            return replacedString.Split('\n').ToList();
         }
 
         //public string counterCSV(CounterData counter)
