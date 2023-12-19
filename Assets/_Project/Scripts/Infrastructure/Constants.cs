@@ -13,6 +13,7 @@ namespace CountersAnalysis
     {
         CountersPackage,
         CalculationPattern,
-        ConsumptionPackage
+        ConsumptionPackage,
+        ResultPackage
     }
 }

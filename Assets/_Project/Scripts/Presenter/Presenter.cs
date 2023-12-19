@@ -8,6 +8,7 @@ namespace CountersAnalysis
     {
         private CounterPackageTab _packagesUITab;
         private CalculationPatternsTab _patternsUITab;
+        private CalculationResultTab _resultUITab;
         private InputFieldWindow _inputFieldWindow;
         private DataHandler _dataHandler;
         private Register _dataRegister;
@@ -15,6 +16,7 @@ namespace CountersAnalysis
         public void init(
             CounterPackageTab counterPackageTab,
             CalculationPatternsTab calculationPatternsTab,
+            CalculationResultTab calculationResultTab,
             InputFieldWindow inputFieldWindow
             )
         {
@@ -22,6 +24,7 @@ namespace CountersAnalysis
             _dataHandler = new DataHandler();
             _packagesUITab = counterPackageTab;
             _patternsUITab = calculationPatternsTab;
+            _resultUITab = calculationResultTab;
             _inputFieldWindow = inputFieldWindow;
             eventsSubscribe();
         }
