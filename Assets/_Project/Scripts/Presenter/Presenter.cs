@@ -8,7 +8,7 @@ namespace CountersAnalysis
     {
         private CounterPackagesWindow _packagesUITab;
         private PatternsWindow _patternsUITab;
-        private ResultsWindow _resultUITab;
+        private CalculationsWindow _resultUITab;
         private InputFieldWindow _inputFieldWindow;
         private DataHandler _dataHandler;
         private Register _dataRegister;
@@ -16,7 +16,7 @@ namespace CountersAnalysis
         public void init(
             CounterPackagesWindow counterPackageTab,
             PatternsWindow calculationPatternsTab,
-            ResultsWindow calculationResultTab,
+            CalculationsWindow calculationResultTab,
             InputFieldWindow inputFieldWindow
             )
         {

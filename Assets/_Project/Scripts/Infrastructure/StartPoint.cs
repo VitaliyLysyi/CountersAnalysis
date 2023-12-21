@@ -6,7 +6,7 @@ namespace CountersAnalysis
     {
         [SerializeField] private CounterPackagesWindow _counterPackagaTab;
         [SerializeField] private PatternsWindow _calculationPatternsTab;
-        [SerializeField] private ResultsWindow _calculationResultTab;
+        [SerializeField] private CalculationsWindow _calculationResultTab;
         [SerializeField] private InputFieldWindow _inputFieldWindow;
 
         private void Start()

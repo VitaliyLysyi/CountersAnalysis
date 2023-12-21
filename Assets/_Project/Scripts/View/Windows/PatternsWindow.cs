@@ -9,7 +9,7 @@ namespace CountersAnalysis
     {
         [Header("Buttons")]
         [SerializeField] private Button _addButton;
-        [SerializeField] private Button _removeButton;
+        [SerializeField] private Button _deleteButton;
         [SerializeField] private Button _addToPatternButton;
         [SerializeField] private Button _removeFromPatternButton;
         [Header("Content")]
@@ -26,7 +26,7 @@ namespace CountersAnalysis
             _itemHolder.init(_dataItemPrefab);
 
             _addButton.onClick.AddListener(addClick);
-            _removeButton.onClick.AddListener(removeClick);
+            _deleteButton.onClick.AddListener(removeClick);
             _addToPatternButton.onClick.AddListener(addToPatternClick);
             _removeFromPatternButton.onClick.AddListener(removeFromPatternClick);
         }
@@ -75,7 +75,7 @@ namespace CountersAnalysis
         private void OnDestroy()
         {
             _addButton.onClick.RemoveAllListeners();
-            _removeButton.onClick.RemoveAllListeners();
+            _deleteButton.onClick.RemoveAllListeners();
             _addToPatternButton.onClick.RemoveAllListeners();
             _removeFromPatternButton.onClick.RemoveAllListeners();
             onAddClick = null;

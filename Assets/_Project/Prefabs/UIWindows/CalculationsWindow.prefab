@@ -925,9 +925,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5032754355228968073}
-  - component: {fileID: 5931220498303659913}
+  - component: {fileID: 7912029682671819439}
   m_Layer: 5
-  m_Name: CalculationPatternsTab
+  m_Name: CalculationsWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -954,7 +954,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5931220498303659913
+--- !u!114 &7912029682671819439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -963,16 +963,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5032754355228968072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ede2ea8bbf29754883146ebd1e1cfff, type: 3}
+  m_Script: {fileID: 11500000, guid: 7696c3ef47f9fcb44b97f244b7babb29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataItemPrefab: {fileID: 7152261462687466257, guid: 49fbc0237ff54b046bcd51fe969c886c,
-    type: 3}
-  _itemHolder: {fileID: 471132631934759272}
-  _addPatternButton: {fileID: 6816748148842150008}
-  _removePatternButton: {fileID: 1335615811405582977}
-  _addToPatternButton: {fileID: 4054493052872140220}
-  _removeFromPatternButton: {fileID: 5066893947707788800}
+  _runCalculationButton: {fileID: 6816748148842150008}
+  _deelteResultButton: {fileID: 1335615811405582977}
 --- !u!1 &5098408267770484814
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,7 +980,7 @@ GameObject:
   - component: {fileID: 5824372491191704219}
   - component: {fileID: 1098419453884145628}
   m_Layer: 5
-  m_Name: ButtonHoolder
+  m_Name: ButtonHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1858,9 +1853,8 @@ GameObject:
   - component: {fileID: 2406229376021226636}
   - component: {fileID: 8839998703897354324}
   - component: {fileID: 4399835076255545381}
-  - component: {fileID: 471132631934759272}
   m_Layer: 5
-  m_Name: Content
+  m_Name: ContentHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1934,15 +1928,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &471132631934759272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8603699831204523600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc8ef6094e861bf4684e79c162a1aa57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

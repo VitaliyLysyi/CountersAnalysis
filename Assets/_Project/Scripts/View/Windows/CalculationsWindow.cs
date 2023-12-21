@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace CountersAnalysis
 {
-    public class ResultsWindow : ContentWindow
+    public class CalculationsWindow : ContentWindow
     {
         [Header("Buttons")]
         [SerializeField] private Button _runCalculationButton;
