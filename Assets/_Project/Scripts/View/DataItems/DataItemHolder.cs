@@ -10,6 +10,8 @@ namespace CountersAnalysis
         private DataItem _currentSelected;
         private List<DataItem> _items = new List<DataItem>();
 
+        
+
         public void init(DataItem dataItemPrefab)
         {
             _itemPrefab = dataItemPrefab;

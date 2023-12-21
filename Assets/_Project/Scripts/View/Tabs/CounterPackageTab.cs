@@ -15,17 +15,25 @@ namespace CountersAnalysis
         public event Action onAddClick;
         public event Action<int> onRemoveClick;
 
+        [SerializeField] private RegistrableItemHolder _newItemHolder;
+        [SerializeField] private RegistrableDataItem _newDataItemPrefab;
+
         public void init()
         {
             _itemHolder.init(_dataItemPrefab);
 
             _addPackageButton.onClick.AddListener(addClick);
             _deletePackageButton.onClick.AddListener(removeData);
+
+
+            _newItemHolder.init(_newDataItemPrefab);
         }
 
         public void showData(RegistrableData registerElementData)
         {
-            _itemHolder.create(registerElementData);
+            //_itemHolder.create(registerElementData);
+
+            _newItemHolder.create(registerElementData);
         }
 
         public void showData(List<RegistrableData> dataList)
@@ -40,11 +48,17 @@ namespace CountersAnalysis
 
         private void removeData()
         {
-            if (_itemHolder.selected == null)
+            //if (_itemHolder.selected == null)
+            //    return;
+
+            //onRemoveClick?.Invoke(_itemHolder.selected.id);
+            //_itemHolder.removeSelected();
+
+            if (_newItemHolder.selected == null)
                 return;
 
-            onRemoveClick?.Invoke(_itemHolder.selected.id);
-            _itemHolder.removeSelected();
+            onRemoveClick?.Invoke(_newItemHolder.selected.id);
+            _newItemHolder.remove(new RegistrableData());
         }
 
         private void OnDestroy()
