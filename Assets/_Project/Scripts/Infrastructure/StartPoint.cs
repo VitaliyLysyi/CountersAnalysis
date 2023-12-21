@@ -4,9 +4,9 @@ namespace CountersAnalysis
 {
     public class StartPoint : MonoBehaviour
     {
-        [SerializeField] private CounterPackageTab _counterPackagaTab;
-        [SerializeField] private CalculationPatternsTab _calculationPatternsTab;
-        [SerializeField] private CalculationResultTab _calculationResultTab;
+        [SerializeField] private CounterPackagesWindow _counterPackagaTab;
+        [SerializeField] private PatternsWindow _calculationPatternsTab;
+        [SerializeField] private ResultsWindow _calculationResultTab;
         [SerializeField] private InputFieldWindow _inputFieldWindow;
 
         private void Start()

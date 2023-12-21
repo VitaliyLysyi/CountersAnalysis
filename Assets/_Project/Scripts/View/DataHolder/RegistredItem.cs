@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 namespace CountersAnalysis
 {
     [RequireComponent(typeof(SimpleOutline))]
-    public class RegistrableDataItem : MonoBehaviour, IDataItem<RegistrableData>, IPointerClickHandler
+    public class RegistredItem : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] TextMeshProUGUI _dataID;
         [SerializeField] TextMeshProUGUI _name;
@@ -47,12 +47,12 @@ namespace CountersAnalysis
         public void showOutline() => _outline.show();
 
         public void hideOutline() => _outline.hide();
+        
+        public int id() => _id;
 
         public void OnPointerClick(PointerEventData eventData)
         {
             onClick?.Invoke(_id);
         }
-
-        public int id => _id;
     }
 }

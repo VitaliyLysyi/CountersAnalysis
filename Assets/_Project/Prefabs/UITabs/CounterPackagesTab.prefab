@@ -709,13 +709,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77917e534631e6245a32151315c0b6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataItemPrefab: {fileID: 9028766407161237342, guid: a9faf09ea0d44814cb18719bba0bd81b,
-    type: 3}
-  _itemHolder: {fileID: 2716068290972958912}
-  _addPackageButton: {fileID: 6816748148842150008}
-  _deletePackageButton: {fileID: 1335615811405582977}
-  _newItemHolder: {fileID: 805248941696337102}
-  _newDataItemPrefab: {fileID: 7152261462687466257, guid: 49fbc0237ff54b046bcd51fe969c886c,
+  _addButton: {fileID: 6816748148842150008}
+  _deleteButton: {fileID: 1335615811405582977}
+  _dataHolder: {fileID: 805248941696337102}
+  _registredItemPrefab: {fileID: 7152261462687466257, guid: 49fbc0237ff54b046bcd51fe969c886c,
     type: 3}
 --- !u!1 &5098408267770484814
 GameObject:
@@ -1189,10 +1186,9 @@ GameObject:
   - component: {fileID: 2406229376021226636}
   - component: {fileID: 8839998703897354324}
   - component: {fileID: 4399835076255545381}
-  - component: {fileID: 2716068290972958912}
   - component: {fileID: 805248941696337102}
   m_Layer: 5
-  m_Name: Content
+  m_Name: DataHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1266,18 +1262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &2716068290972958912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8603699831204523600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc05036847822ad4c98cd2c879537f26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &805248941696337102
 MonoBehaviour:
   m_ObjectHideFlags: 0

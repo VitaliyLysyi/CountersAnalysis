@@ -966,9 +966,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ede2ea8bbf29754883146ebd1e1cfff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataItemPrefab: {fileID: 1606709264288689067, guid: 1fbfe29eb990af94f89a58480709b847,
+  _dataItemPrefab: {fileID: 7152261462687466257, guid: 49fbc0237ff54b046bcd51fe969c886c,
     type: 3}
-  _itemHolder: {fileID: 5174479910854111441}
+  _itemHolder: {fileID: 471132631934759272}
   _addPatternButton: {fileID: 6816748148842150008}
   _removePatternButton: {fileID: 1335615811405582977}
   _addToPatternButton: {fileID: 4054493052872140220}
@@ -1858,7 +1858,7 @@ GameObject:
   - component: {fileID: 2406229376021226636}
   - component: {fileID: 8839998703897354324}
   - component: {fileID: 4399835076255545381}
-  - component: {fileID: 5174479910854111441}
+  - component: {fileID: 471132631934759272}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1916,7 +1916,7 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
+  m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -1934,7 +1934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &5174479910854111441
+--- !u!114 &471132631934759272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1943,6 +1943,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8603699831204523600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc05036847822ad4c98cd2c879537f26, type: 3}
+  m_Script: {fileID: 11500000, guid: fc8ef6094e861bf4684e79c162a1aa57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

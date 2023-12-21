@@ -6,17 +6,17 @@ namespace CountersAnalysis
 {
     public class Presenter
     {
-        private CounterPackageTab _packagesUITab;
-        private CalculationPatternsTab _patternsUITab;
-        private CalculationResultTab _resultUITab;
+        private CounterPackagesWindow _packagesUITab;
+        private PatternsWindow _patternsUITab;
+        private ResultsWindow _resultUITab;
         private InputFieldWindow _inputFieldWindow;
         private DataHandler _dataHandler;
         private Register _dataRegister;
 
         public void init(
-            CounterPackageTab counterPackageTab,
-            CalculationPatternsTab calculationPatternsTab,
-            CalculationResultTab calculationResultTab,
+            CounterPackagesWindow counterPackageTab,
+            PatternsWindow calculationPatternsTab,
+            ResultsWindow calculationResultTab,
             InputFieldWindow inputFieldWindow
             )
         {
