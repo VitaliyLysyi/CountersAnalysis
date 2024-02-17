@@ -16,14 +16,16 @@ namespace CountersAnalysis
             _calculationResultTab.init();
             _inputFieldWindow.hide();
 
-            Presenter presenter = new Presenter();
-            presenter.init(
+            View view = new View();
+            view.init(
                 _counterPackagaTab,
                 _calculationPatternsTab,
                 _calculationResultTab,
                 _inputFieldWindow
                 );
 
+            Presenter presenter = new Presenter();
+            presenter.init(view);
             presenter.start();
         }
     }

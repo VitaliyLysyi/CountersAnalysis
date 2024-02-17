@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine;
 using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace CountersAnalysis
 {
@@ -28,14 +27,6 @@ namespace CountersAnalysis
         public void showData(RegistrableData registerElementData)
         {
             _dataHolder.hold(registerElementData);
-        }
-
-        public void showData(List<RegistrableData> dataList)
-        {
-            foreach (RegistrableData data in dataList)
-            {
-                showData(data);
-            }
         }
 
         private void addClick() => onAddClick?.Invoke();

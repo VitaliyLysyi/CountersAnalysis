@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,26 +5,16 @@ namespace CountersAnalysis
 {
     public class Presenter
     {
-        private CounterPackagesWindow _packagesUITab;
-        private PatternsWindow _patternsUITab;
-        private CalculationsWindow _resultUITab;
-        private InputFieldWindow _inputFieldWindow;
+        private View _view;
         private DataHandler _dataHandler;
         private Register _dataRegister;
 
-        public void init(
-            CounterPackagesWindow counterPackageTab,
-            PatternsWindow calculationPatternsTab,
-            CalculationsWindow calculationResultTab,
-            InputFieldWindow inputFieldWindow
-            )
+        public void init(View view)
         {
             _dataRegister = new Register();
             _dataHandler = new DataHandler();
-            _packagesUITab = counterPackageTab;
-            _patternsUITab = calculationPatternsTab;
-            _resultUITab = calculationResultTab;
-            _inputFieldWindow = inputFieldWindow;
+            _view = view;
+
             eventsSubscribe();
         }
 
@@ -34,13 +23,12 @@ namespace CountersAnalysis
             Application.quitting += eventsUnsubscribe;
             Application.quitting += _dataRegister.saveData;
 
-            _packagesUITab.onAddClick += importCounterPackage;
-            _packagesUITab.onRemoveClick += _dataRegister.remove;
+            _view.onImportCounterPackage += importCounterPackage;
+            _view.onRegistredDataRemove += removeDataFromRegister;
+            _view.onNewPatternCreate += createCalculationPattern;
 
-            _patternsUITab.onAddClick += addNewCalculationPattern;
-            _patternsUITab.onAddToPatternClick += addToPatternClick;
-            _patternsUITab.onRemoveFromPatternClick += removeFromPatternClick;
-            _patternsUITab.onRemoveClick += _dataRegister.remove;
+            //_patternsUITab.onAddToPatternClick += addToPatternClick;
+            //_patternsUITab.onRemoveFromPatternClick += removeFromPatternClick;
         }
 
         private void eventsUnsubscribe()
@@ -48,85 +36,76 @@ namespace CountersAnalysis
             Application.quitting -= eventsUnsubscribe;
             Application.quitting -= _dataRegister.saveData;
 
-            _packagesUITab.onAddClick -= importCounterPackage;
-            _packagesUITab.onRemoveClick -= _dataRegister.remove;
+            _view.onImportCounterPackage -= importCounterPackage;
+            _view.onRegistredDataRemove -= removeDataFromRegister;
+            _view.onNewPatternCreate -= createCalculationPattern;
 
-            _patternsUITab.onAddClick -= addNewCalculationPattern;
-            _patternsUITab.onAddToPatternClick -= addToPatternClick;
-            _patternsUITab.onRemoveFromPatternClick -= removeFromPatternClick;
-            _patternsUITab.onRemoveClick -= _dataRegister.remove;
+            //_patternsUITab.onAddToPatternClick -= addToPatternClick;
+            //_patternsUITab.onRemoveFromPatternClick -= removeFromPatternClick;
         }
 
         public void start()
         {
             _dataRegister.load();
 
-            _packagesUITab.showData(_dataRegister.getAllByType(RegistredDataType.CountersPackage));
-            _patternsUITab.showData(_dataRegister.getAllByType(RegistredDataType.CalculationPattern));
+            List<RegistrableData> packages = _dataRegister.getAllByType(RegistredDataType.CountersPackage);
+            List<RegistrableData> patterns = _dataRegister.getAllByType(RegistredDataType.CalculationPattern);
+            _view.showPackages(packages);
+            _view.showPatterns(patterns);
         }
 
-        private void importCounterPackage()
+        private void importCounterPackage(string path)
         {
-            try
-            {
-                string path = DialogService.choseFile("Import new CountersPackage", "", "xml");
-                CountersPackage countersPackage = _dataHandler.importPackage(path);
-                _dataRegister.add(countersPackage);
-                _packagesUITab.showData(countersPackage.getRegistrableData());
-            }
-            catch (Exception exception)
-            {
-                DialogService.showMessage("Import failed:", exception.Message);
-            }
+            CountersPackage countersPackage = _dataHandler.importPackage(path);
+            _dataRegister.add(countersPackage);
+
+            RegistrableData packageRegistrableData = countersPackage.getRegistrableData();
+            _view.showPackages(packageRegistrableData);
         }
 
-        private void addNewCalculationPattern()
+        private void createCalculationPattern(string path)
         {
-            try
-            {
-                string path = DialogService.saveFile("Name", "Enter File Name", Constants.DEFAULT_DATA_PATH, "xml");
-                CalculationPattern calculationPattern = _dataHandler.createCalculationPattern(path);
-                _dataRegister.add(calculationPattern);
-                _patternsUITab.showData(_dataRegister.getLast());
-            }
-            catch (Exception exception)
-            {
-                DialogService.showMessage("Saving failed:", exception.Message);
-            }
+            CalculationPattern calculationPattern = _dataHandler.createCalculationPattern(path);
+            _dataRegister.add(calculationPattern);
+
+            RegistrableData patternRegistrableData = calculationPattern.getRegistrableData();
+            _view.showPatterns(patternRegistrableData);
         }
 
-        private void addToPatternClick(int id)
-        {
-            string title = "¬каж≥ть номери л≥чильник≥в";
-            _inputFieldWindow.show(title, "", inputString => addToPattern(inputString, id));
-        }
+        private void removeDataFromRegister(int id) => _dataRegister.remove(id);
 
-        private void addToPattern(string text, int id)
-        {
-            List<string> counterNumbers = _dataHandler.clearSplit(text);
-            List<CounterData> counterDatas = _dataHandler.createByNumbers(counterNumbers);
+        //private void addToPatternClick(int id)
+        //{
+        //    string title = "¬каж≥ть номери л≥чильник≥в";
+        //    _inputFieldWindow.show(title, "", inputString => addToPattern(inputString, id));
+        //}
 
-            RegistrableData registrableData = _dataRegister.getData(id);
-            CalculationPattern pattern = _dataHandler.openPattern(registrableData);
-            pattern.addCounter(counterDatas);
-            _dataHandler.savePattern(pattern);
-        }
+        //private void addToPattern(string text, int id)
+        //{
+        //    List<string> counterNumbers = _dataHandler.clearSplit(text);
+        //    List<CounterData> counterDatas = _dataHandler.createByNumbers(counterNumbers);
 
-        private void removeFromPatternClick(int id)
-        {
-            string title = "¬каж≥ть номери л≥чильник≥в";
-            _inputFieldWindow.show(title, "", inputString => removeFromPattern(inputString, id));
-        }
+        //    RegistrableData registrableData = _dataRegister.getData(id);
+        //    CalculationPattern pattern = _dataHandler.openPattern(registrableData);
+        //    pattern.addCounter(counterDatas);
+        //    _dataHandler.savePattern(pattern);
+        //}
 
-        private void removeFromPattern(string text, int id)
-        {
-            List<string> counterNumbers = _dataHandler.clearSplit(text);
-            List<CounterData> counterDatas = _dataHandler.createByNumbers(counterNumbers);
+        //private void removeFromPatternClick(int id)
+        //{
+        //    string title = "¬каж≥ть номери л≥чильник≥в";
+        //    _inputFieldWindow.show(title, "", inputString => removeFromPattern(inputString, id));
+        //}
 
-            RegistrableData registrableData = _dataRegister.getData(id);
-            CalculationPattern pattern = _dataHandler.openPattern(registrableData);
-            pattern.removeCounter(counterDatas);
-            _dataHandler.savePattern(pattern);
-        }
+        //private void removeFromPattern(string text, int id)
+        //{
+        //    List<string> counterNumbers = _dataHandler.clearSplit(text);
+        //    List<CounterData> counterDatas = _dataHandler.createByNumbers(counterNumbers);
+
+        //    RegistrableData registrableData = _dataRegister.getData(id);
+        //    CalculationPattern pattern = _dataHandler.openPattern(registrableData);
+        //    pattern.removeCounter(counterDatas);
+        //    _dataHandler.savePattern(pattern);
+        //}
     }
 }

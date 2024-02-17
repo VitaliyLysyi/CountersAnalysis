@@ -36,14 +36,6 @@ namespace CountersAnalysis
             _itemHolder.hold(registerElementData);
         }
 
-        public void showData(List<RegistrableData> dataList)
-        {
-            foreach (RegistrableData data in dataList)
-            {
-                showData(data);
-            }
-        }
-
         private void addClick() => onAddClick?.Invoke();
 
         private void addToPatternClick()

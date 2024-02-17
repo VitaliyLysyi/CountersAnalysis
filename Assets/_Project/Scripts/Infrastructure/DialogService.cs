@@ -6,25 +6,25 @@ namespace CountersAnalysis
 {
     public static class DialogService
     {
-        public static string choseFile(string title = "Chose file", string directory = "", string targetExtension = "")
+        public static string getFilePathWithExtension(string title, string directory, string extension)
         {
-            string path = EditorUtility.OpenFilePanel(title, directory, targetExtension);
-            if (targetExtension == "")
-                return path;
-            
-            if (Path.GetExtension(path) == ("." + targetExtension))
-                return path;
-            
-            throw new Exception("Wrong file path or extension");
+            string path = EditorUtility.OpenFilePanel(title, directory, extension);
+            if (Path.GetExtension(path) != ("." + extension))
+                throw new Exception("Wrong file extension");
+
+            return path;
         }
 
-        public static string saveFile(string name = "", string title = "Enter File Name", string directory = "", string targetExtension = "")
+        public static string getSavedFilePathWithExtension(string name, string title, string directory, string extension)
         {
-            string path = EditorUtility.SaveFilePanel(title, directory, name, targetExtension);
-            if (Path.GetFileNameWithoutExtension(path) != "")
-                return path;
+            string path = EditorUtility.SaveFilePanel(title, directory, name, extension);
+            if (Path.GetFileNameWithoutExtension(path) == "")
+                throw new Exception("Wrong file name");
 
-            throw new Exception("Wrong file name or extension");
+            if (Path.GetExtension(path) != ("." + extension))
+                throw new Exception("Wrong file extension");
+
+            return path;
         }
 
         public static void showMessage(string title, string message, string buttonText = "OK")
