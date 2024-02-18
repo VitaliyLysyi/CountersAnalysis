@@ -76,7 +76,5 @@ namespace CountersAnalysis
         {
             return _data.Where(data => data.elementType == dataType.ToString()).ToList();
         }
-
-        public RegistrableData getLast() => _data.LastOrDefault();
     }
 }

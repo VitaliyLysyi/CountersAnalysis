@@ -6,24 +6,26 @@ namespace CountersAnalysis
 {
     public class View
     {
-        private CounterPackagesWindow _packagesUITab;
-        private PatternsWindow _patternsUITab;
-        private CalculationsWindow _resultUITab;
+        private CounterPackagesWindow _packagesTab;
+        private PatternsWindow _patternsTab;
+        private CalculationsWindow _resultsTab;
         private InputFieldWindow _inputFieldWindow;
 
         public event Action<string> onImportCounterPackage;
         public event Action<string> onNewPatternCreate;
         public event Action<int> onRegistredDataRemove;
+        public event Action<int, string> onAddToPattern;
+        public event Action<int, string> onRemoveFromPattern;
 
         public void init(
-            CounterPackagesWindow counterPackageTab,
-            PatternsWindow calculationPatternsTab,
-            CalculationsWindow calculationResultTab,
+            CounterPackagesWindow counterPackageWindow,
+            PatternsWindow calculationPatternsWindow,
+            CalculationsWindow calculationResultWindow,
             InputFieldWindow inputFieldWindow)
         {
-            _packagesUITab = counterPackageTab;
-            _patternsUITab = calculationPatternsTab;
-            _resultUITab = calculationResultTab;
+            _packagesTab = counterPackageWindow;
+            _patternsTab = calculationPatternsWindow;
+            _resultsTab = calculationResultWindow;
             _inputFieldWindow = inputFieldWindow;
 
             eventSubscribe();
@@ -33,22 +35,26 @@ namespace CountersAnalysis
         {
             Application.quitting += eventUnsubscribe;
 
-            _packagesUITab.onAddClick += tryInvokePackageImport;
-            _packagesUITab.onRemoveClick += invokeRemoveData;
+            _packagesTab.onAddClick += tryInvokePackageImport;
+            _packagesTab.onRemoveClick += invokeRemoveData;
 
-            _patternsUITab.onAddClick += tryInvokePatternCreation;
-            _patternsUITab.onRemoveClick += invokeRemoveData;
+            _patternsTab.onAddClick += tryInvokePatternCreation;
+            _patternsTab.onRemoveClick += invokeRemoveData;
+            _patternsTab.onAddToPatternClick += addToPatternDialog;
+            _patternsTab.onRemoveFromPatternClick += removeFromPatternDialog;
         }
 
         private void eventUnsubscribe()
         {
             Application.quitting -= eventUnsubscribe;
 
-            _packagesUITab.onAddClick -= tryInvokePackageImport;
-            _packagesUITab.onRemoveClick -= invokeRemoveData;
+            _packagesTab.onAddClick -= tryInvokePackageImport;
+            _packagesTab.onRemoveClick -= invokeRemoveData;
 
-            _patternsUITab.onAddClick -= tryInvokePatternCreation;
-            _patternsUITab.onRemoveClick -= invokeRemoveData;
+            _patternsTab.onAddClick -= tryInvokePatternCreation;
+            _patternsTab.onRemoveClick -= invokeRemoveData;
+            _patternsTab.onAddToPatternClick -= addToPatternDialog;
+            _patternsTab.onRemoveFromPatternClick -= removeFromPatternDialog;
         }
 
         private void tryInvokePackageImport()
@@ -85,24 +91,44 @@ namespace CountersAnalysis
             onRegistredDataRemove?.Invoke(id);
         }
 
+        private void addToPatternDialog(int id)
+        {
+            string title = "¬каж≥ть номери л≥чильник≥в";
+            string defaultInput = string.Empty;
+            _inputFieldWindow.show(title, defaultInput, inputCallback =>
+            {
+                onAddToPattern?.Invoke(id, inputCallback);
+            });
+        }
+
+        private void removeFromPatternDialog(int id)
+        {
+            string title = "¬каж≥ть номери л≥чильник≥в";
+            string defaultInput = string.Empty;
+            _inputFieldWindow.show(title, defaultInput, inputCallback =>
+            {
+                onRemoveFromPattern?.Invoke(id, inputCallback);
+            });
+        }
+
         public void showPackages(RegistrableData package)
         {
-            _packagesUITab.showData(package);
+            _packagesTab.showData(package);
         }
 
         public void showPackages(List<RegistrableData> packages)
         {
-            packages.ForEach(package => _packagesUITab.showData(package));
+            packages.ForEach(package => _packagesTab.showData(package));
         }
 
         public void showPatterns(RegistrableData pattern)
         {
-            _patternsUITab.showData(pattern);
+            _patternsTab.showData(pattern);
         }
 
         public void showPatterns(List<RegistrableData> patterns)
         {
-            patterns.ForEach(pattern => _patternsUITab.showData(pattern));
+            patterns.ForEach(pattern => _patternsTab.showData(pattern));
         }
 
         public void showResults(List<RegistrableData> results)
