@@ -44,8 +44,7 @@ namespace CountersAnalysis
             Debug.Log("===PACKAGE " +  package + "===");
             Debug.Log("===DATE " + package.date + "===");
             Debug.Log("Note = " + package.note);
-            Debug.Log("Head Counter:");
-            logCounterDeployed(package.headCounter);
+            Debug.Log("COUNTERS:");
             if (package.counters != null)
             {
                 Debug.Log("Counters Count = " + package.counters.Count + " ===>");
@@ -61,7 +60,7 @@ namespace CountersAnalysis
             string spacingString = new string('=', spacing);
             Debug.Log(spacingString);
             Debug.Log("Counter number = " + counter.number
-                + " Coeficient = " + counter.coeficient
+                + " Coeficient = " + counter.coefficient
                 );
             Debug.Log("Note = " + counter.note);
             if (counter.scales != null)

@@ -17,6 +17,8 @@ namespace CountersAnalysis
         public event Action<int, string> onAddToPattern;
         public event Action<int, string> onRemoveFromPattern;
 
+        public event Action onCalculationRun;
+
         public void init(
             CounterPackagesWindow counterPackageWindow,
             PatternsWindow calculationPatternsWindow,
@@ -42,6 +44,8 @@ namespace CountersAnalysis
             _patternsTab.onRemoveClick += invokeRemoveData;
             _patternsTab.onAddToPatternClick += addToPatternDialog;
             _patternsTab.onRemoveFromPatternClick += removeFromPatternDialog;
+
+            _resultsTab.onCalculationRun += invokeCalculation;
         }
 
         private void eventUnsubscribe()
@@ -55,6 +59,8 @@ namespace CountersAnalysis
             _patternsTab.onRemoveClick -= invokeRemoveData;
             _patternsTab.onAddToPatternClick -= addToPatternDialog;
             _patternsTab.onRemoveFromPatternClick -= removeFromPatternDialog;
+
+            _resultsTab.onCalculationRun -= invokeCalculation;
         }
 
         private void tryInvokePackageImport()
@@ -109,6 +115,11 @@ namespace CountersAnalysis
             {
                 onRemoveFromPattern?.Invoke(id, inputCallback);
             });
+        }
+
+        private void invokeCalculation()
+        {
+            onCalculationRun?.Invoke();
         }
 
         public void showPackages(RegistrableData package)

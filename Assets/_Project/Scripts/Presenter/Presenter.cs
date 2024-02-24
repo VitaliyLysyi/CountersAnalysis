@@ -28,6 +28,7 @@ namespace CountersAnalysis
             _view.onNewPatternCreate += createCalculationPattern;
             _view.onAddToPattern += addToPattern;
             _view.onRemoveFromPattern += removeFromPattern;
+            _view.onCalculationRun += runTestCalculation;
         }
 
         private void eventsUnsubscribe()
@@ -40,6 +41,7 @@ namespace CountersAnalysis
             _view.onNewPatternCreate -= createCalculationPattern;
             _view.onAddToPattern -= addToPattern;
             _view.onRemoveFromPattern -= removeFromPattern;
+            _view.onCalculationRun -= runTestCalculation;
         }
 
         public void start()
@@ -92,6 +94,11 @@ namespace CountersAnalysis
             CalculationPattern pattern = _dataHandler.openPattern(registrableData);
             pattern.removeCounter(counterDatas);
             _dataHandler.savePattern(pattern);
+        }
+
+        private void runTestCalculation()
+        {
+            Debug.Log("TEST CALCULATION CLICK");
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 
 namespace CountersAnalysis
 {
@@ -16,6 +17,11 @@ namespace CountersAnalysis
             _registrableData.path = path;
             _registrableData.name = Path.GetFileNameWithoutExtension(path);
             _registrableData.elementType = RegistredDataType.CountersPackage.ToString();
+        }
+
+        public CounterData getCounterData(string number)
+        {
+            return _packageData.counters.FirstOrDefault(counter => counter.number == number);
         }
 
         public RegistrableData getRegistrableData()

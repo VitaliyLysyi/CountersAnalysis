@@ -21,5 +21,12 @@ namespace CountersAnalysis
 
         [XmlAttribute("IsError")]
         public bool isError;
+
+        [XmlAttribute("ErrorNote")]
+        public string errorNote;
     }
 }
+// TEMP REFERENCE:
+//  <Scale Value="9768.048" ZoneType="0" IsActive="true" IsBackward="false" CalculationError="false" />
+//  < Scale Value = "8768.0480" IsActive = "true" />
+//  < Scale Value = "8768.0480" ZoneType = "1" IsActive = "true" />
